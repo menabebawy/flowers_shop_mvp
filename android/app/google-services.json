@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "870077720388",
+    "project_id": "flowers-shop-mvp",
+    "storage_bucket": "flowers-shop-mvp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870077720388:android:5e1eb0c500475fcb1f9911",
+        "android_client_info": {
+          "package_name": "com.company.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCApJIe5fn2dZNoh-tB3zdOymAHkVnrIm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870077720388:android:9eb505a4eaaa0ac81f9911",
+        "android_client_info": {
+          "package_name": "com.example.flowers_shop_mvp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCApJIe5fn2dZNoh-tB3zdOymAHkVnrIm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
