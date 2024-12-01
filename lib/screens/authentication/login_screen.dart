@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/screens/authentication/register_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../dashboard/admin_dashboard_screen.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,14 +48,14 @@ class LoginScreenState extends State<LoginScreen> {
           if (role == 'admin') {
             navigator.pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const AdminDashboardScreen(isAdmin: true),
+                builder: (context) => const DashboardScreen(isAdmin: true),
               ),
             );
           } else {
             navigator.pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
-                    const AdminDashboardScreen(isAdmin: false),
+                    const DashboardScreen(isAdmin: false),
               ),
             );
           }
@@ -67,6 +67,47 @@ class LoginScreenState extends State<LoginScreen> {
       } catch (e) {
         _showErrorDialog('An unexpected error occurred. Please try again.');
       }
+    }
+  }
+
+  Future<void> _continueAsGuest() async {
+    final navigator = Navigator.of(context);
+
+    try {
+      final credential = await FirebaseAuth.instance.signInAnonymously();
+
+      // Add anonymous user to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set({
+        'uid': credential.user!.uid,
+        'role': 'guest', // Default role for anonymous users
+      });
+
+      navigator.pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const DashboardScreen(isAdmin: false), // Adjust screen as needed
+        ),
+      );
+    } catch (e) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Error'),
+              content: Text(e.toString()),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      });
     }
   }
 
@@ -157,6 +198,11 @@ class LoginScreenState extends State<LoginScreen> {
                   }
                 },
                 child: const Text('Don\'t have an account? Register Here'),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: _continueAsGuest,
+                child: const Text('Continue as Guest'),
               ),
             ],
           ),

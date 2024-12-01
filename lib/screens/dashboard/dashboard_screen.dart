@@ -7,10 +7,10 @@ import '../admin/add_product_screen.dart';
 import '../admin/edit_product_screen.dart';
 import '../authentication/login_screen.dart';
 
-class AdminDashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatelessWidget {
   final bool isAdmin;
 
-  const AdminDashboardScreen({super.key, required this.isAdmin});
+  const DashboardScreen({super.key, required this.isAdmin});
 
   Future<void> _logout(BuildContext context) async {
     try {

@@ -9,24 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Modularize structure">
-      <change afterPath="$PROJECT_DIR$/lib/screens/admin/add_product_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/admin/edit_product_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/dashboard/admin_dashboard_screen.dart" afterDir="false" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Initialize Registration UI">
+      <change afterPath="$PROJECT_DIR$/lib/screens/splash_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/product_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/product_card.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/flowers_shop_mvp_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/flowers_shop_mvp_android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flowers_shop_mvp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flowers_shop_mvp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/admin_dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/product_list_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,14 +115,17 @@
     "git-widget-placeholder": "develop",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mena/Documents/repos/UrbondoInfrastrucutre",
+    "last_opened_file_path": "/home/mena/Documents/repos/new_project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.36551723",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "actions.on.save",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
@@ -156,10 +156,21 @@
       <option name="useRegexp" value="false" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="flowers_shop_mvp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="flowers_shop_mvp" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Flutter Test.Counter increments smoke test" />
         <item itemvalue="Flutter Test.tests in widget_test.dart" />
+        <item itemvalue="Flutter Test.Counter increments smoke test" />
       </list>
     </recent_temporary>
   </component>
@@ -188,7 +199,12 @@
       <workItem from="1732442979844" duration="5350000" />
       <workItem from="1732479778297" duration="1619000" />
       <workItem from="1732716969585" duration="10472000" />
-      <workItem from="1732978516088" duration="10440000" />
+      <workItem from="1732978516088" duration="15628000" />
+      <workItem from="1733063226917" duration="2397000" />
+      <workItem from="1733065919906" duration="1955000" />
+      <workItem from="1733067907337" duration="5320000" />
+      <workItem from="1733073364957" duration="17000" />
+      <workItem from="1733073403587" duration="5820000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -238,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732735980797</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Initialize Registration UI">
+      <option name="closed" value="true" />
+      <created>1733042206232</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733042206232</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -279,15 +303,16 @@
     <MESSAGE value="Initialize Firebase" />
     <MESSAGE value="Load products' item" />
     <MESSAGE value="Modularize structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modularize structure" />
+    <MESSAGE value="Initialize Registration UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initialize Registration UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
-          <line>153</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/lib/screens/splash_screen.dart</url>
+          <line>13</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

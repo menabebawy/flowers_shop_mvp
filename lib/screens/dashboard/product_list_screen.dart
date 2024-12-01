@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/product_card.dart';
+import '../../widgets/product_card.dart';
 
 class ProductListScreen extends StatelessWidget {
   final bool isAdmin; // Accept isAdmin as a parameter
