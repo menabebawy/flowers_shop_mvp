@@ -2,31 +2,42 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final Map<String, dynamic> product;
+  final bool isAdmin;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({
+    super.key,
+    required this.product,
+    required this.isAdmin,
+    this.onEdit,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final name = product['name'] ?? 'No Name';
-    final price = product['price'] ?? 0;
-    final imageUrl = product['image'];
-
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        title: Text(name),
-        subtitle: Text('Price: \$${price.toString()}'),
-        leading: imageUrl != null
-            ? Image.network(
-                imageUrl,
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.broken_image, size: 50);
-                },
+        title: Text(product['name'] ?? 'Unnamed Product'),
+        subtitle: Text(product['price'] != null
+            ? 'Price: \$${product['price']}'
+            : 'No price available'),
+        trailing: isAdmin
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: onEdit,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: onDelete,
+                  ),
+                ],
               )
-            : const Icon(Icons.image, size: 50),
+            : null, // No actions for non-admin users
       ),
     );
   }

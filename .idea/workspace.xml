@@ -9,14 +9,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Load products' item">
-      <change afterPath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/widgets/product_card.dart" afterDir="false" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Modularize structure">
+      <change afterPath="$PROJECT_DIR$/lib/screens/admin/add_product_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/admin/edit_product_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/dashboard/admin_dashboard_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flowers_shop_mvp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flowers_shop_mvp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/flowers_shop_app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/product_list_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/product_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/product_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,12 +118,13 @@
     "git-widget-placeholder": "develop",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/mena/Documents/repos/flowers_shop_mvp/android/app",
+    "last_opened_file_path": "/home/mena/Documents/repos/UrbondoInfrastrucutre",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "actions.on.save",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
@@ -123,6 +134,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/android/app" />
       <recent name="$PROJECT_DIR$/ios/Runner" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/screens/dashboard" />
+      <recent name="$PROJECT_DIR$/lib/screens/admin" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -172,7 +187,8 @@
       <workItem from="1732442910114" duration="46000" />
       <workItem from="1732442979844" duration="5350000" />
       <workItem from="1732479778297" duration="1619000" />
-      <workItem from="1732716969585" duration="7162000" />
+      <workItem from="1732716969585" duration="10472000" />
+      <workItem from="1732978516088" duration="10440000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -214,7 +230,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732733814956</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Modularize structure">
+      <option name="closed" value="true" />
+      <created>1732735980797</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732735980797</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -254,7 +278,19 @@
     <MESSAGE value="Update .gitignore" />
     <MESSAGE value="Initialize Firebase" />
     <MESSAGE value="Load products' item" />
-    <option name="LAST_COMMIT_MESSAGE" value="Load products' item" />
+    <MESSAGE value="Modularize structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modularize structure" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
+          <line>153</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
