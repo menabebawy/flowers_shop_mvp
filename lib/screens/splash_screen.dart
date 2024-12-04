@@ -9,40 +9,65 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   Future<void> _checkUser(BuildContext context) async {
-    final user = FirebaseAuth.instance.currentUser;
+    try {
+      final user = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      // Fetch role from Firestore
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
+      if (user != null) {
+        print('User is logged in: ${user.email}');
 
-      if (userDoc.exists) {
-        final role = userDoc.data()?['role'];
+        // Fetch role from Firestore
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
 
-        if (role == 'admin') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DashboardScreen(isAdmin: true),
-            ),
-          );
+        if (userDoc.exists) {
+          final role = userDoc.data()?['role'];
+          print('User role: $role');
+
+          if (role == 'admin') {
+            // Navigate to Admin Dashboard
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashboardScreen(isAdmin: true),
+              ),
+            );
+          } else if (role == 'user') {
+            // Navigate to User Dashboard
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashboardScreen(isAdmin: false),
+              ),
+            );
+          } else {
+            print('Unknown role: $role');
+            // Role not recognized, navigate to login screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+          }
         } else {
+          print('User document does not exist in Firestore');
+          // User data not found, navigate to login screen
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (context) => const DashboardScreen(isAdmin: false),
-            ),
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
           );
         }
       } else {
+        print('No user is logged in');
+        // User is not logged in, navigate to login screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       }
-    } else {
+    } catch (e) {
+      print('Error checking user: $e');
+      // Handle errors gracefully and navigate to login screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/product_card.dart';
 import '../admin/add_product_screen.dart';
@@ -18,6 +19,11 @@ class DashboardScreen extends StatelessWidget {
       final navigator = Navigator.of(context);
 
       await FirebaseAuth.instance.signOut();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.remove('isLoggedIn');
+      prefs.remove('userToken');
+      prefs.remove('userRole');
 
       // Use the stored Navigator to navigate
       navigator.pushReplacement(

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/screens/authentication/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dashboard/dashboard_screen.dart';
 
@@ -20,11 +21,31 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    // Clear the fields when the screen is initialized
+    _checkLoginStatus();
     _emailController.clear();
     _passwordController.clear();
   }
 
+  /// Check if a token is stored and navigate to the appropriate screen.
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('userToken');
+    String? role = prefs.getString('userRole');
+
+    if (token != null && role != null) {
+      // User is logged in; navigate to the dashboard
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DashboardScreen(
+            isAdmin: role == 'admin',
+          ),
+        ),
+      );
+    }
+  }
+
+  /// Handle user login and save token and role.
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       final navigator = Navigator.of(context);
@@ -44,23 +65,22 @@ class LoginScreenState extends State<LoginScreen> {
 
         if (userDoc.exists) {
           final role = userDoc.data()?['role'];
+          final token = await credential.user!.getIdToken();
 
-          if (role == 'admin') {
+          if (role != null && token != null) {
+            // Save token and role
+            await saveLoginStatus(token, role);
+
             navigator.pushReplacement(
               MaterialPageRoute(
-                builder: (context) => const DashboardScreen(isAdmin: true),
+                builder: (context) => DashboardScreen(isAdmin: role == 'admin'),
               ),
             );
           } else {
-            navigator.pushReplacement(
-              MaterialPageRoute(
-                builder: (context) =>
-                    const DashboardScreen(isAdmin: false),
-              ),
-            );
+            _showErrorDialog('User role not found. Please contact support.');
           }
         } else {
-          _showErrorDialog('User role not found. Please contact support.');
+          _showErrorDialog('User data not found. Please contact support.');
         }
       } on FirebaseAuthException catch (e) {
         _showErrorDialog(_getFriendlyErrorMessage(e.code));
@@ -68,6 +88,15 @@ class LoginScreenState extends State<LoginScreen> {
         _showErrorDialog('An unexpected error occurred. Please try again.');
       }
     }
+  }
+
+  /// Save login token and role in shared preferences.
+  Future<void> saveLoginStatus(String token, String role) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+    await prefs.setString('userToken', token);
+    await prefs.setString('userRole', role);
+    print('Token and role saved successfully: $token, $role');
   }
 
   Future<void> _continueAsGuest() async {
@@ -85,9 +114,13 @@ class LoginScreenState extends State<LoginScreen> {
         'role': 'guest', // Default role for anonymous users
       });
 
+      // Save guest login status
+      await saveLoginStatus('anonymous', 'guest');
+
       navigator.pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const DashboardScreen(isAdmin: false), // Adjust screen as needed
+          builder: (context) =>
+              const DashboardScreen(isAdmin: false), // Adjust screen as needed
         ),
       );
     } catch (e) {
