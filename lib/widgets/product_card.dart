@@ -19,6 +19,18 @@ class ProductCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
+        leading: product['image'] != null
+            ? Image.network(
+                product['image'],
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              )
+            : const Icon(
+                Icons.image,
+                size: 50,
+                color: Colors.grey,
+              ),
         title: Text(product['name'] ?? 'Unnamed Product'),
         subtitle: Text(product['price'] != null
             ? 'Price: \$${product['price']}'
