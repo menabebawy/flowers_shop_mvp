@@ -9,8 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Ran app successfully on Pixel/Android">
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Show product image">
+      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/cart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/order_confirmation_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/product_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/product_card.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +199,7 @@
       <workItem from="1733073364957" duration="17000" />
       <workItem from="1733073403587" duration="8443000" />
       <workItem from="1733343716849" duration="76000" />
-      <workItem from="1733502479430" duration="1215000" />
+      <workItem from="1733502479430" duration="5808000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -268,7 +273,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733341517684</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Show product image">
+      <option name="closed" value="true" />
+      <created>1733503728075</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733503728075</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -312,7 +325,8 @@
     <MESSAGE value="Initialize Registration UI" />
     <MESSAGE value="Add Splash screen and make Android to run" />
     <MESSAGE value="Ran app successfully on Pixel/Android" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ran app successfully on Pixel/Android" />
+    <MESSAGE value="Show product image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show product image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -331,11 +345,6 @@
           <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
           <line>34</line>
           <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart</url>
-          <line>20</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

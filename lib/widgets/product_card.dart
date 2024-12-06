@@ -19,9 +19,9 @@ class ProductCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(10),
       child: ListTile(
-        leading: product['image'] != null
+        leading: product['imageUrl'] != null
             ? Image.network(
-                product['image'],
+                product['imageUrl'],
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,
