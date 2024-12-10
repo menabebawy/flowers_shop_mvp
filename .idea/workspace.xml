@@ -9,16 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Add checkout screens (empty)">
-      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/order_detail_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/product_card_cart.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/dashboard/product_card_dashboard.dart" afterDir="false" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Sexy product dashboard card">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flowers_shop_mvp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flowers_shop_mvp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/product_list_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/product_list_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/product_card.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +95,7 @@
     "Dart Command Line App.main.dart.executor": "Run",
     "Flutter Test.Counter increments smoke test.executor": "Run",
     "Flutter Test.tests in widget_test.dart.executor": "Run",
-    "Flutter.main.dart.executor": "Run",
+    "Flutter.main.dart.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
@@ -193,7 +186,7 @@
       <workItem from="1733502479430" duration="6048000" />
       <workItem from="1733684860974" duration="6970000" />
       <workItem from="1733811434273" duration="6016000" />
-      <workItem from="1733855675481" duration="3757000" />
+      <workItem from="1733855675481" duration="6437000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -283,7 +276,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733509660356</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Sexy product dashboard card">
+      <option name="closed" value="true" />
+      <created>1733859509892</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1733859509892</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -329,7 +330,8 @@
     <MESSAGE value="Ran app successfully on Pixel/Android" />
     <MESSAGE value="Show product image" />
     <MESSAGE value="Add checkout screens (empty)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add checkout screens (empty)" />
+    <MESSAGE value="Sexy product dashboard card" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sexy product dashboard card" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -349,7 +351,15 @@
           <line>34</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/checkout/order_screen.dart</url>
+          <line>40</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="dart-exception" />
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

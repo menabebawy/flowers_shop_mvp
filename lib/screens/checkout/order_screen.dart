@@ -36,7 +36,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     for (var product in products) {
       final productDoc = await FirebaseFirestore.instance
           .collection('products')
-          .doc(product['productId'])
+          .doc(product['id'])
           .get();
       final productName = productDoc.data()?['name'] ?? 'Unknown Product';
       productNames.add('${product['quantity']}x $productName');
