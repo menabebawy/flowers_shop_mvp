@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flowers_shop_mvp/screens/dashboard/product_card_dashboard.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/product_card.dart';
 
 class ProductListScreen extends StatelessWidget {
   final bool isAdmin; // Accept isAdmin as a parameter
@@ -31,7 +30,7 @@ class ProductListScreen extends StatelessWidget {
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index].data() as Map<String, dynamic>;
-              return ProductCard(
+              return ProductCardDashboard(
                 product: product,
                 isAdmin: isAdmin, // Pass the isAdmin flag
               );

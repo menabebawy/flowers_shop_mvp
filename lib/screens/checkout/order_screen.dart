@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'order_detail_screen.dart';
+
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
 
@@ -26,6 +28,21 @@ class _OrdersScreenState extends State<OrdersScreen> {
         .where('userId', isEqualTo: userId)
         .snapshots()
         .map((snapshot) => snapshot.docs);
+  }
+
+  Future<String> fetchProductNames(List products) async {
+    List<String> productNames = [];
+
+    for (var product in products) {
+      final productDoc = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(product['productId'])
+          .get();
+      final productName = productDoc.data()?['name'] ?? 'Unknown Product';
+      productNames.add('${product['quantity']}x $productName');
+    }
+
+    return productNames.join(', ');
   }
 
   @override
@@ -91,18 +108,57 @@ class _OrdersScreenState extends State<OrdersScreen> {
       itemCount: orders.length,
       itemBuilder: (context, index) {
         final order = orders[index].data() as Map<String, dynamic>;
+        final products = order['products'] as List;
+
         return Card(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: ListTile(
-            title: Text('Order ID: ${orders[index].id}'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Status: ${order['status']}'),
-                Text(
-                    'Total Price: \$${(order['totalPrice'] ?? 0).toStringAsFixed(2)}'),
-                Text('Date: ${order['createdAt']?.toDate()?.toLocal()}'),
-              ],
+            title: FutureBuilder(
+              future: fetchProductSummaryAndTotal(products),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Calculating Total...');
+                }
+                if (snapshot.hasError) {
+                  return const Text('Error loading total.');
+                }
+
+                final data = snapshot.data as Map<String, dynamic>;
+                return Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Total: ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '\$${data['total']}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            subtitle: FutureBuilder(
+              future: fetchProductSummaryAndTotal(products),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Loading products...');
+                }
+                if (snapshot.hasError) {
+                  return const Text('Error loading products.');
+                }
+
+                final data = snapshot.data as Map<String, dynamic>;
+                return Text('Products: ${data['summary']}');
+              },
             ),
             trailing: IconButton(
               icon: const Icon(Icons.arrow_forward),
@@ -123,53 +179,35 @@ class _OrdersScreenState extends State<OrdersScreen> {
       },
     );
   }
-}
 
-class OrderDetailScreen extends StatelessWidget {
-  final String orderId;
-  final Map<String, dynamic> orderData;
+  Future<Map<String, dynamic>> fetchProductSummaryAndTotal(
+      List products) async {
+    List<String> productSummaries = [];
+    double totalPrice = 0.0;
 
-  const OrderDetailScreen({
-    super.key,
-    required this.orderId,
-    required this.orderData,
-  });
+    for (var product in products) {
+      // Fetch the product details from the 'products' collection
+      final productDoc = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(product['productId'])
+          .get();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Order Details ($orderId)'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Order ID: $orderId',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            const SizedBox(height: 16),
-            Text('Status: ${orderData['status']}'),
-            Text(
-                'Total Price: \$${(orderData['totalPrice'] ?? 0).toStringAsFixed(2)}'),
-            Text('Created At: ${orderData['createdAt']?.toDate()?.toLocal()}'),
-            const SizedBox(height: 16),
-            const Text('Products:',
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            ...List.generate((orderData['products'] as List).length, (index) {
-              final product = orderData['products'][index];
-              return ListTile(
-                title: Text(product['name']),
-                subtitle: Text('Quantity: ${product['quantity']}'),
-                trailing: Text(
-                    '\$${(product['price'] * product['quantity']).toStringAsFixed(2)}'),
-              );
-            }),
-          ],
-        ),
-      ),
-    );
+      final productName = productDoc.data()?['name'] ?? 'Unknown Product';
+      final productPrice =
+          productDoc.data()?['price'] ?? 0.0; // Default to 0 if missing
+      final quantity = product['quantity'] ?? 0;
+
+      // Add to the total price
+      totalPrice += productPrice * quantity;
+
+      // Add product summary (e.g., "2 Roses")
+      productSummaries.add('$quantity $productName');
+    }
+
+    // Return both the total price and product summary
+    return {
+      'summary': productSummaries.join(', '), // e.g., "2 Roses, 1 Lily"
+      'total': totalPrice.toStringAsFixed(2), // e.g., "35.00"
+    };
   }
 }
