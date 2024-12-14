@@ -9,9 +9,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Sexy product dashboard card">
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Login/logout works as expected">
+      <change afterPath="$PROJECT_DIR$/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/local_user.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/screens/dashboard/profile_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/views/product_card_home.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flowers_shop_mvp/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flowers_shop_mvp/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/values-night/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/values-night/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Base.lproj/LaunchScreen.storyboard" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/product_card_dashboard.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/product_list_screen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +119,7 @@
     "Dart Command Line App.main.dart.executor": "Run",
     "Flutter Test.Counter increments smoke test.executor": "Run",
     "Flutter Test.tests in widget_test.dart.executor": "Run",
-    "Flutter.main.dart.executor": "Debug",
+    "Flutter.main.dart.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
@@ -113,7 +137,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.36551723",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "preferences.sourceCode.XML",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
@@ -124,7 +148,9 @@
       <recent name="$PROJECT_DIR$/ios/Runner" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/views" />
       <recent name="$PROJECT_DIR$/lib/screens/dashboard" />
+      <recent name="$PROJECT_DIR$/lib/screens" />
       <recent name="$PROJECT_DIR$/lib/screens/admin" />
     </key>
   </component>
@@ -186,7 +212,10 @@
       <workItem from="1733502479430" duration="6048000" />
       <workItem from="1733684860974" duration="6970000" />
       <workItem from="1733811434273" duration="6016000" />
-      <workItem from="1733855675481" duration="6437000" />
+      <workItem from="1733855675481" duration="6635000" />
+      <workItem from="1733863122529" duration="764000" />
+      <workItem from="1733895033107" duration="23818000" />
+      <workItem from="1734167699131" duration="4657000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -284,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733859509892</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Show desired product name on cart screen">
+      <option name="closed" value="true" />
+      <created>1733862300003</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1733862300003</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -331,30 +368,17 @@
     <MESSAGE value="Show product image" />
     <MESSAGE value="Add checkout screens (empty)" />
     <MESSAGE value="Sexy product dashboard card" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sexy product dashboard card" />
+    <MESSAGE value="Show desired product name on cart screen" />
+    <MESSAGE value="Login/logout works as expected" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login/logout works as expected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
-          <line>69</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
-          <line>23</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/authentication/login_screen.dart</url>
-          <line>34</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/checkout/order_screen.dart</url>
-          <line>40</line>
-          <option name="timeStamp" value="21" />
+          <url>file://$PROJECT_DIR$/lib/models/local_user.dart</url>
+          <line>18</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

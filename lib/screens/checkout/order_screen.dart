@@ -206,8 +206,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
     // Return both the total price and product summary
     return {
-      'summary': productSummaries.join(', '), // e.g., "2 Roses, 1 Lily"
-      'total': totalPrice.toStringAsFixed(2), // e.g., "35.00"
+      'summary': productSummaries.join(', '),
+      'total': totalPrice.toStringAsFixed(2),
     };
   }
 }

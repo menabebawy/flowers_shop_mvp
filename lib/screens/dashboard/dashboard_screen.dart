@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flowers_shop_mvp/screens/dashboard/product_card_dashboard.dart';
+import 'package:flowers_shop_mvp/screens/authentication/login_screen.dart';
+import 'package:flowers_shop_mvp/screens/dashboard/cart_screen.dart';
+import 'package:flowers_shop_mvp/screens/dashboard/profile_screen.dart';
+import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
-import '../admin/edit_product_screen.dart';
-import '../authentication/login_screen.dart';
+import '../../models/local_user.dart';
 import '../checkout/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -18,13 +20,21 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  String? selectedCategoryId; // Selected category for filtering
+  int _selectedIndex = 0;
+  String? selectedCategoryId;
   late Future<List<QueryDocumentSnapshot>> categoriesFuture;
 
   @override
   void initState() {
     super.initState();
     categoriesFuture = fetchCategories();
+    // Ensure status bar icons are white for visibility
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
   }
 
   Future<List<QueryDocumentSnapshot>> fetchCategories() async {
@@ -33,267 +43,194 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return snapshot.docs;
   }
 
-  Future<void> _updateCart(String productId, int quantity) async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-
-    // Query for the user's pending order
-    final orderQuery = await FirebaseFirestore.instance
-        .collection('orders')
-        .where('userId', isEqualTo: userId)
-        .where('status', isEqualTo: 'pending')
-        .limit(1)
-        .get();
-
-    if (orderQuery.docs.isNotEmpty) {
-      // Update existing pending order
-      final orderDoc = orderQuery.docs.first;
-      final orderData = orderDoc.data();
-      final products = List<Map<String, dynamic>>.from(orderData['products']);
-
-      // Check if the product already exists in the order
-      final productIndex =
-          products.indexWhere((p) => p['productId'] == productId);
-
-      if (productIndex >= 0) {
-        if (quantity > 0) {
-          // Update quantity
-          products[productIndex]['quantity'] = quantity;
-        } else {
-          // Remove product if quantity is zero
-          products.removeAt(productIndex);
-        }
-      } else if (quantity > 0) {
-        // Add new product
-        products.add({'productId': productId, 'quantity': quantity});
-      }
-
-      await FirebaseFirestore.instance
-          .collection('orders')
-          .doc(orderDoc.id)
-          .update({'products': products});
-    } else {
-      // Create a new pending order if none exists
-      await FirebaseFirestore.instance.collection('orders').add({
-        'userId': userId,
-        'status': 'pending',
-        'products': quantity > 0
-            ? [
-                {'productId': productId, 'quantity': quantity}
-              ]
-            : [],
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-    }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  Future<void> _logout(BuildContext context) async {
-    try {
-      final navigator = Navigator.of(context);
+  Future<Widget> _getSelectedScreen() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final LocalUser? localUser;
+    if (user != null) {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      final additionalData = userDoc.data() ?? {};
+      localUser = LocalUser.fromFirebase(user, additionalData);
+    } else {
+      localUser = null;
+    }
 
-      await FirebaseAuth.instance.signOut();
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.remove('isLoggedIn');
-      prefs.remove('userToken');
-      prefs.remove('userRole');
-
-      navigator.pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    } catch (e) {
-      if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Logout Failed'),
-            content: Text(e.toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
+    switch (_selectedIndex) {
+      case 1:
+        return localUser == null
+            ? const LoginScreen()
+            : ProfileScreen(
+                user: localUser,
+                onLogout: _resetToFirstTab, // Pass the reset callback,
+              );
+      case 2:
+        return widget.isAdmin ? const OrdersScreen() : const CartScreen();
+      case 0:
+      default:
+        return Column(
+          children: [
+            // Top Bar with Category Dropdown
+            AppBar(
+              backgroundColor: Colors.black,
+              centerTitle: true,
+              title: FutureBuilder<List<QueryDocumentSnapshot>>(
+                future: categoriesFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator(color: Colors.white);
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No categories available.',
+                        style: TextStyle(fontSize: 16, color: Colors.white));
+                  }
+                  final categories = snapshot.data!;
+                  return Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: const BoxDecoration(color: Colors.black),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: selectedCategoryId,
+                        hint: const Text('All Categories',
+                            style: TextStyle(color: Colors.white)),
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.white),
+                        dropdownColor: Colors.black,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCategoryId = value;
+                          });
+                        },
+                        items: [
+                          const DropdownMenuItem(
+                            value: null,
+                            child: Text('All Categories',
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                          ...categories.map((category) {
+                            final data =
+                                category.data() as Map<String, dynamic>;
+                            return DropdownMenuItem(
+                              value: category.id,
+                              child: Text(data['name'] ?? 'Unnamed Category',
+                                  style: const TextStyle(color: Colors.white)),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+            // Product Grid
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: selectedCategoryId != null
+                    ? FirebaseFirestore.instance
+                        .collection('products')
+                        .where('categoryId', isEqualTo: selectedCategoryId)
+                        .snapshots()
+                    : FirebaseFirestore.instance
+                        .collection('products')
+                        .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Center(child: Text('No products available.'));
+                  }
+                  final products = snapshot.data!.docs;
+                  return GridView.builder(
+                    padding: const EdgeInsets.all(8.0),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: 0.75,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product =
+                          products[index].data() as Map<String, dynamic>;
+                      return ProductCardHome(product: product);
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         );
-      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.isAdmin ? 'Admin Dashboard' : 'User Dashboard'),
-        actions: [
-          if (!widget.isAdmin)
-            Stack(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.shopping_cart),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const OrdersScreen(),
-                      ),
-                    );
-                  },
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0; // Navigate to home when back button is pressed
+          });
+          return false; // Prevent the app from closing
+        }
+        return true; // Allow app to close if on the home screen
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: FutureBuilder<Widget>(
+          future: _getSelectedScreen(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
+                  style: const TextStyle(color: Colors.red),
                 ),
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('orders')
-                      .where('userId', isEqualTo: userId)
-                      .where('status', isEqualTo: 'pending')
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const SizedBox(); // No pending order
-                    }
-
-                    final pendingOrder = snapshot.data!.docs.first;
-                    final products = List<Map<String, dynamic>>.from(
-                      pendingOrder['products'] ?? [],
-                    );
-
-                    final totalItems = products.fold<int>(
-                      0,
-                      (sum, product) => sum + (product['quantity'] as int),
-                    );
-
-                    if (totalItems == 0) {
-                      return const SizedBox(); // Do not display badge if cart is empty
-                    }
-
-                    return Positioned(
-                      right: 1,
-                      // Push badge further away from the right edge of the icon
-                      top: 5,
-                      // Push badge slightly lower to avoid overlap
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        // Adjust padding for sizing
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius:
-                              BorderRadius.circular(12), // Perfect circle
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 18, // Badge width
-                          minHeight: 18, // Badge height
-                        ),
-                        child: Text(
-                          '$totalItems',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10, // Smaller font size for compact badge
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => _logout(context),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Category filter dropdown
-          FutureBuilder<List<QueryDocumentSnapshot>>(
-            future: categoriesFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              }
-              if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No categories available.');
-              }
-              final categories = snapshot.data!;
-              return DropdownButton<String>(
-                value: selectedCategoryId,
-                hint: const Text('Filter by Category'),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCategoryId = value;
-                  });
-                },
-                items: [
-                  const DropdownMenuItem(
-                    value: null,
-                    child: Text('All Categories'),
-                  ),
-                  ...categories.map((category) {
-                    final data = category.data() as Map<String, dynamic>;
-                    return DropdownMenuItem(
-                      value: category.id,
-                      child: Text(data['name'] ?? 'Unnamed Category'),
-                    );
-                  }),
-                ],
               );
-            },
-          ),
-          // Products section
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('products')
-                  .where('categoryId',
-                      isEqualTo: selectedCategoryId) // Filter by category
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('No products available.'));
-                }
-                final products = snapshot.data!.docs;
-                return ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return ProductCardDashboard(
-                      product: product.data() as Map<String, dynamic>,
-                      isAdmin: widget.isAdmin,
-                      onEdit: widget.isAdmin
-                          ? () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProductScreen(
-                                    productId: product.id,
-                                    productData:
-                                        product.data() as Map<String, dynamic>,
-                                  ),
-                                ),
-                              );
-                            }
-                          : null,
-                      onDelete: widget.isAdmin
-                          ? () {
-                              FirebaseFirestore.instance
-                                  .collection('products')
-                                  .doc(product.id)
-                                  .delete();
-                            }
-                          : null,
-                    );
-                  },
-                );
-              },
+            } else if (snapshot.hasData && snapshot.data != null) {
+              return snapshot.data!;
+            } else {
+              return const Center(child: Text('No data available'));
+            }
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey.shade400,
+          items: [
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.home), label: 'Home'),
+            const BottomNavigationBarItem(
+                icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(
+              icon: Icon(widget.isAdmin ? Icons.list : Icons.shopping_cart),
+              label: widget.isAdmin ? 'Orders' : 'Cart',
             ),
-          ),
-        ],
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ),
       ),
     );
+  }
+
+  void _resetToFirstTab() {
+    setState(() {
+      _selectedIndex = 0; // Reset to the first tab
+    });
   }
 }

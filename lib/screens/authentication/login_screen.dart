@@ -21,28 +21,8 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();
     _emailController.clear();
     _passwordController.clear();
-  }
-
-  /// Check if a token is stored and navigate to the appropriate screen.
-  Future<void> _checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('userToken');
-    String? role = prefs.getString('userRole');
-
-    if (token != null && role != null) {
-      // User is logged in; navigate to the dashboard
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DashboardScreen(
-            isAdmin: role == 'admin',
-          ),
-        ),
-      );
-    }
   }
 
   /// Handle user login and save token and role.
@@ -172,7 +152,11 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          title: const Text('Login')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -220,8 +204,7 @@ class LoginScreenState extends State<LoginScreen> {
                   final result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RegisterScreen(),
-                    ),
+                        builder: (context) => const RegisterScreen()),
                   );
 
                   // Clear fields if user successfully registered

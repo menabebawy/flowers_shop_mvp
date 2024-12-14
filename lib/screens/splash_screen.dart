@@ -1,88 +1,93 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'authentication/login_screen.dart';
 import 'dashboard/dashboard_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
-  Future<void> _checkUser(BuildContext context) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
+  @override
+  SplashScreenState createState() => SplashScreenState();
+}
 
-      if (user != null) {
-        print('User is logged in: ${user.email}');
+class SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
-        // Fetch role from Firestore
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
+  @override
+  void initState() {
+    super.initState();
 
-        if (userDoc.exists) {
-          final role = userDoc.data()?['role'];
-          print('User role: $role');
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
 
-          if (role == 'admin') {
-            // Navigate to Admin Dashboard
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DashboardScreen(isAdmin: true),
-              ),
-            );
-          } else if (role == 'user') {
-            // Navigate to User Dashboard
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DashboardScreen(isAdmin: false),
-              ),
-            );
-          } else {
-            print('Unknown role: $role');
-            // Role not recognized, navigate to login screen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginScreen()),
-            );
-          }
-        } else {
-          print('User document does not exist in Firestore');
-          // User data not found, navigate to login screen
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
-          );
-        }
-      } else {
-        print('No user is logged in');
-        // User is not logged in, navigate to login screen
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
-      }
-    } catch (e) {
-      print('Error checking user: $e');
-      // Handle errors gracefully and navigate to login screen
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+
+    _animationController.forward();
+
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(
+          builder: (context) => const DashboardScreen(isAdmin: false),
+        ),
       );
-    }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Check authentication after a slight delay (optional for splash effect)
-    Future.delayed(Duration.zero, () => _checkUser(context));
-
-    return const Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(), // Show a loading indicator
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.pink.shade200, Colors.purple.shade400],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          Center(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/logo.png', // Replace with your logo asset path
+                    width: 150,
+                    height: 150,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Blumen Nicole',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
