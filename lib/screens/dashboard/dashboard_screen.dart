@@ -21,8 +21,10 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
+  Map<String, dynamic>? selectedProduct;
   String? selectedCategoryId;
   late Future<List<QueryDocumentSnapshot>> categoriesFuture;
+  List<Map<String, dynamic>> localCart = [];
 
   @override
   void initState() {
@@ -69,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ? const LoginScreen()
             : ProfileScreen(
                 user: localUser,
-                onLogout: _resetToFirstTab, // Pass the reset callback,
+                onLogout: _resetToFirstTab,
               );
       case 2:
         return widget.isAdmin ? const OrdersScreen() : const CartScreen();
@@ -163,7 +165,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     itemBuilder: (context, index) {
                       final product =
                           products[index].data() as Map<String, dynamic>;
-                      return ProductCardHome(product: product);
+                      return ProductCardHome(
+                        product: product,
+                        onTap: () => addToCart(product),
+                      );
                     },
                   );
                 },
@@ -232,5 +237,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {
       _selectedIndex = 0; // Reset to the first tab
     });
+  }
+
+  void openCartWithProduct(Map<String, dynamic> product) {
+    setState(() {
+      selectedProduct = product; // Set the selected product
+      _selectedIndex = 2; // Navigate to the cart screen
+    });
+  }
+
+  void addToCart(Map<String, dynamic> product) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Reference to the orders collection
+      final ordersCollection = FirebaseFirestore.instance.collection('orders');
+
+      // Check for an existing pending order for the user
+      final querySnapshot = await ordersCollection
+          .where('userId', isEqualTo: user.uid)
+          .where('status', isEqualTo: 'pending')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // A pending order exists, update it
+        final orderDoc = querySnapshot.docs.first;
+        final orderData = orderDoc.data();
+        final products = List<Map<String, dynamic>>.from(orderData['products']);
+
+        // Check if the product already exists in the order
+        final existingProductIndex = products.indexWhere(
+          (p) => p['productId'] == product['id'],
+        );
+
+        if (existingProductIndex != -1) {
+          // Update the quantity of the existing product
+          products[existingProductIndex]['quantity'] += 1;
+        } else {
+          // Add the new product to the order
+          products.add({'productId': product['id'], 'quantity': 1});
+        }
+
+        // Update the order in Firestore
+        await ordersCollection.doc(orderDoc.id).update({'products': products});
+      } else {
+        // No pending order exists, create a new one
+        await ordersCollection.add({
+          'userId': user.uid,
+          'status': 'pending',
+          'createdAt': DateTime.now(),
+          'products': [
+            {'productId': product['productId'], 'quantity': 1},
+          ],
+        });
+      }
+    } else {
+      // Handle unauthenticated users with a local cart
+      localCart.add(product);
+    }
+
+    // Show feedback to the user
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '${product['name']} added to cart!',
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
+      ),
+    );
   }
 }

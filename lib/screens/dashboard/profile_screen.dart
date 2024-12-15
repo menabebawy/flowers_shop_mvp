@@ -37,6 +37,7 @@ class ProfileScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 32),
+            const Spacer(),
             SizedBox(
               width: double.infinity,
               height: 60,
@@ -82,7 +83,7 @@ class ProfileScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.zero, // No rounded corners
                   ),
                 ),
                 child: const Text(

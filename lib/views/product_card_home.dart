@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 class ProductCardHome extends StatelessWidget {
   final Map<String, dynamic> product;
+  final VoidCallback onTap;
 
   const ProductCardHome({
     super.key,
     required this.product,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, // Add functionality if needed
+      onTap: onTap, // Trigger the parent-provided callback
       child: Container(
         margin: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
@@ -76,7 +78,7 @@ class ProductCardHome extends StatelessWidget {
                   // Product Price
                   Text(
                     product['price'] != null
-                        ? '€${product['price']}' // Using Indian Rupee symbol
+                        ? '€${product['price']}'
                         : 'No price available',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
