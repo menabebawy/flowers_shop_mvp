@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/screens/authentication/login_screen.dart';
@@ -21,6 +22,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
+  int _cartCount = 0;
   Map<String, dynamic>? selectedProduct;
   String? selectedCategoryId;
   late Future<List<QueryDocumentSnapshot>> categoriesFuture;
@@ -29,6 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    _fetchCartCount();
+    _listenToCartUpdates();
     categoriesFuture = fetchCategories();
     // Ensure status bar icons are white for visibility
     SystemChrome.setSystemUIOverlayStyle(
@@ -45,6 +49,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return snapshot.docs;
   }
 
+  Future<void> _fetchCartCount() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('orders')
+          .where('userId', isEqualTo: user.uid)
+          .where('status', isEqualTo: 'pending')
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final orderData = querySnapshot.docs.first.data();
+        final products = List<Map<String, dynamic>>.from(orderData['products']);
+        setState(() {
+          _cartCount = products.fold<int>(
+              0, (total, item) => total + (item['quantity'] as int));
+        });
+      } else {
+        setState(() {
+          _cartCount = 0;
+        });
+      }
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -53,7 +83,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<Widget> _getSelectedScreen() async {
     final user = FirebaseAuth.instance.currentUser;
-    final LocalUser? localUser;
+    LocalUser? localUser;
+
+    // Fetch user details if logged in
     if (user != null) {
       final userDoc = await FirebaseFirestore.instance
           .collection('users')
@@ -61,21 +93,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
           .get();
       final additionalData = userDoc.data() ?? {};
       localUser = LocalUser.fromFirebase(user, additionalData);
-    } else {
-      localUser = null;
     }
 
+    // Determine the selected tab and return the appropriate screen
     switch (_selectedIndex) {
-      case 1:
-        return localUser == null
-            ? const LoginScreen()
+      case 1: // Profile Screen
+        return user == null
+            ? const LoginScreen() // Redirect to login if not logged in
             : ProfileScreen(
-                user: localUser,
+                user: localUser!,
                 onLogout: _resetToFirstTab,
               );
-      case 2:
-        return widget.isAdmin ? const OrdersScreen() : const CartScreen();
-      case 0:
+
+      case 2: // Cart or Orders Screen
+        return widget.isAdmin
+            ? const OrdersScreen() // Admin sees orders
+            : CartScreen(
+                onNavigateHome: () {
+                  setState(() {
+                    _selectedIndex = 0; // Navigate to Home tab
+                  });
+                },
+                onCartUpdated: _fetchCartCount, // Update cart badge dynamically
+              );
+
+      case 0: // Home Screen
       default:
         return Column(
           children: [
@@ -90,8 +132,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     return const CircularProgressIndicator(color: Colors.white);
                   }
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No categories available.',
-                        style: TextStyle(fontSize: 16, color: Colors.white));
+                    return const Text(
+                      'No categories available.',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    );
                   }
                   final categories = snapshot.data!;
                   return Container(
@@ -101,8 +145,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: selectedCategoryId,
-                        hint: const Text('All Categories',
-                            style: TextStyle(color: Colors.white)),
+                        hint: const Text(
+                          'All Categories',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         icon: const Icon(Icons.arrow_drop_down,
                             color: Colors.white),
                         dropdownColor: Colors.black,
@@ -114,16 +160,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         items: [
                           const DropdownMenuItem(
                             value: null,
-                            child: Text('All Categories',
-                                style: TextStyle(color: Colors.white)),
+                            child: Text(
+                              'All Categories',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                           ...categories.map((category) {
                             final data =
                                 category.data() as Map<String, dynamic>;
                             return DropdownMenuItem(
                               value: category.id,
-                              child: Text(data['name'] ?? 'Unnamed Category',
-                                  style: const TextStyle(color: Colors.white)),
+                              child: Text(
+                                data['name'] ?? 'Unnamed Category',
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             );
                           }),
                         ],
@@ -222,7 +272,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const BottomNavigationBarItem(
                 icon: Icon(Icons.person), label: 'Profile'),
             BottomNavigationBarItem(
-              icon: Icon(widget.isAdmin ? Icons.list : Icons.shopping_cart),
+              icon: widget.isAdmin
+                  ? const Icon(Icons.list)
+                  : badges.Badge(
+                      showBadge: _cartCount > 0,
+                      // Show badge only if the cart count > 0
+                      badgeContent: Text(
+                        '$_cartCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      badgeStyle: const badges.BadgeStyle(
+                        badgeColor: Colors.orange, // Set badge color to orange
+                      ),
+                      child:
+                          const Icon(Icons.shopping_cart), // Shopping cart icon
+                    ),
               label: widget.isAdmin ? 'Orders' : 'Cart',
             ),
           ],
@@ -237,6 +305,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {
       _selectedIndex = 0; // Reset to the first tab
     });
+  }
+
+  void _listenToCartUpdates() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection('orders')
+          .where('userId', isEqualTo: user.uid)
+          .where('status', isEqualTo: 'pending')
+          .snapshots()
+          .listen((querySnapshot) {
+        if (querySnapshot.docs.isNotEmpty) {
+          final orderData = querySnapshot.docs.first.data();
+          final products =
+              List<Map<String, dynamic>>.from(orderData['products']);
+          setState(() {
+            _cartCount = products.fold<int>(
+                0, (total, item) => total + (item['quantity'] as int));
+          });
+        } else {
+          setState(() {
+            _cartCount = 0;
+          });
+        }
+      });
+    }
   }
 
   void openCartWithProduct(Map<String, dynamic> product) {
@@ -296,6 +390,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // Handle unauthenticated users with a local cart
       localCart.add(product);
     }
+
+    // Refresh cart count
+    await _fetchCartCount();
 
     // Show feedback to the user
     ScaffoldMessenger.of(context).showSnackBar(

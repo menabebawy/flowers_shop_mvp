@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  final VoidCallback onNavigateHome;
+  final VoidCallback onCartUpdated;
+
+  const CartScreen(
+      {required this.onNavigateHome, required this.onCartUpdated, super.key});
 
   @override
   CartScreenState createState() => CartScreenState();
@@ -121,6 +125,9 @@ class CartScreenState extends State<CartScreen> {
       setState(() {
         cart.removeWhere((p) => p['productId'] == productId);
       });
+
+      // Notify parent to refresh cart count
+      widget.onCartUpdated();
     }
   }
 
@@ -129,6 +136,8 @@ class CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
+        foregroundColor: Colors.white,
         backgroundColor: Colors.black,
         title: const Text('Cart'),
       ),
@@ -139,7 +148,28 @@ class CartScreenState extends State<CartScreen> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : cart.isEmpty
-                    ? const Center(child: Text('Your cart is empty.'))
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Image in the center when the cart is empty
+                          Center(
+                            child: Image.asset(
+                              'assets/empty_cart.png', // Replace with your image asset
+                              height: 200,
+                              width: 200,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Your cart is empty!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      )
                     : ListView.builder(
                         itemCount: cart.length,
                         padding: const EdgeInsets.only(bottom: 100),
@@ -211,15 +241,10 @@ class CartScreenState extends State<CartScreen> {
                                           ),
                                         ],
                                       ),
-
-                                      // Dynamic Spacer for Quantity
-                                      const SizedBox(
-                                        height: 30, // Dynamic adjustment
-                                      ),
-
-                                      // Quantity and Delete Row
+                                      const SizedBox(height: 30),
                                       Row(
                                         children: [
+                                          // Quantity controls
                                           Container(
                                             decoration: BoxDecoration(
                                               border: Border.all(
@@ -232,7 +257,6 @@ class CartScreenState extends State<CartScreen> {
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
-                                              // Add padding inside the border
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
@@ -334,27 +358,46 @@ class CartScreenState extends State<CartScreen> {
                         },
                       ),
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).viewPadding.bottom + 16,
-            left: 16,
-            right: 16,
-            child: ElevatedButton(
-              onPressed: () {
-                // Checkout logic
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                minimumSize: const Size(double.infinity, 60),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero,
-                ),
-              ),
-              child: const Text(
-                'Checkout',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
+
+          // Bottom Button Section
+          if (!isLoading)
+            Positioned(
+              bottom: MediaQuery.of(context).viewPadding.bottom + 16,
+              left: 16,
+              right: 16,
+              child: cart.isEmpty
+                  ? ElevatedButton(
+                      onPressed: widget.onNavigateHome,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        minimumSize: const Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Go to Shopping',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        // Checkout logic
+                        print("Proceeding to checkout");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        minimumSize: const Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Checkout',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
             ),
-          ),
         ],
       ),
     );
