@@ -9,13 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Add to orders">
-      <change afterPath="$PROJECT_DIR$/assets/empty_cart.png" afterDir="false" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Add live badge cart">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +196,7 @@
       <workItem from="1734201208423" duration="19675000" />
       <workItem from="1734462002444" duration="7053000" />
       <workItem from="1734548345151" duration="655000" />
-      <workItem from="1734549072360" duration="1411000" />
+      <workItem from="1734549072360" duration="2971000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -322,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734267427153</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Add live badge cart">
+      <option name="closed" value="true" />
+      <created>1734550643455</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1734550643455</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -372,7 +376,8 @@
     <MESSAGE value="Show desired product name on cart screen" />
     <MESSAGE value="Login/logout works as expected" />
     <MESSAGE value="Add to orders" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add to orders" />
+    <MESSAGE value="Add live badge cart" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add live badge cart" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
