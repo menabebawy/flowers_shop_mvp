@@ -79,51 +79,6 @@ class LoginScreenState extends State<LoginScreen> {
     print('Token and role saved successfully: $token, $role');
   }
 
-  Future<void> _continueAsGuest() async {
-    final navigator = Navigator.of(context);
-
-    try {
-      final credential = await FirebaseAuth.instance.signInAnonymously();
-
-      // Add anonymous user to Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(credential.user!.uid)
-          .set({
-        'uid': credential.user!.uid,
-        'role': 'guest', // Default role for anonymous users
-      });
-
-      // Save guest login status
-      await saveLoginStatus('anonymous', 'guest');
-
-      navigator.pushReplacement(
-        MaterialPageRoute(
-          builder: (context) =>
-              const DashboardScreen(isAdmin: false), // Adjust screen as needed
-        ),
-      );
-    } catch (e) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Error'),
-              content: Text(e.toString()),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('OK'),
-                ),
-              ],
-            ),
-          );
-        }
-      });
-    }
-  }
-
   String _getFriendlyErrorMessage(String errorCode) {
     switch (errorCode) {
       case 'invalid-credential':
@@ -153,7 +108,6 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
           title: const Text('Login')),
@@ -192,10 +146,28 @@ class LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _login,
-                child: const Text('Login'),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                // Add padding around the button
+                child: SizedBox(
+                  width: double.infinity, // Full width
+                  height: 60, // Fixed height
+                  child: ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8.0), // Rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               TextButton(
@@ -213,12 +185,8 @@ class LoginScreenState extends State<LoginScreen> {
                     _passwordController.clear();
                   }
                 },
-                child: const Text('Don\'t have an account? Register Here'),
-              ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: _continueAsGuest,
-                child: const Text('Continue as Guest'),
+                child: const Text('Don\'t have an account? Register Here',
+                    style: TextStyle(color: Colors.black54, fontSize: 16)),
               ),
             ],
           ),

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../checkout/checkout_screen.dart';
+
 class CartScreen extends StatefulWidget {
   final VoidCallback onNavigateHome;
   final VoidCallback onCartUpdated;
@@ -381,20 +383,34 @@ class CartScreenState extends State<CartScreen> {
                       ),
                     )
                   : ElevatedButton(
-                      onPressed: () {
-                        // Checkout logic
-                        print("Proceeding to checkout");
-                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
                         minimumSize: const Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        backgroundColor: Colors.orange,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
+                      onPressed: () {
+                        if (cart.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Your cart is empty!'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        } else {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CheckoutScreen(products: cart),
+                            ),
+                          );
+                        }
+                      },
                       child: const Text(
-                        'Checkout',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        'Proceed to Checkout',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
             ),

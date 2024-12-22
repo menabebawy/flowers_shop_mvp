@@ -177,10 +177,28 @@ class RegisterScreenState extends State<RegisterScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _register,
-                child: const Text('Register'),
+              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                // Add padding around the button
+                child: SizedBox(
+                  width: double.infinity, // Full width
+                  height: 60, // Fixed height
+                  child: ElevatedButton(
+                    onPressed: _register,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(8.0), // Rounded corners
+                      ),
+                    ),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

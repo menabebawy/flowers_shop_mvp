@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/screens/authentication/login_screen.dart';
 import 'package:flowers_shop_mvp/screens/dashboard/cart_screen.dart';
-import 'package:flowers_shop_mvp/screens/dashboard/profile_screen.dart';
+import 'package:flowers_shop_mvp/screens/profile/profile_screen.dart';
 import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           : CartScreen(
               onCartUpdated: _fetchCartCount,
               onNavigateHome: () {
-                _selectedIndex = 0;
+                _resetToFirstTab();
               },
             ),
     ];
@@ -100,6 +100,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
+      if (_selectedIndex == 1) {
+        // Rebuild the Profile Screen dynamically
+        _screens[1] = FutureBuilder<Widget>(
+          future: _getProfileScreen(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text('Error loading profile.'));
+            }
+            return snapshot.data ?? const SizedBox.shrink();
+          },
+        );
+      }
     });
   }
 
@@ -203,9 +218,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 padding: const EdgeInsets.all(8.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.75,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  childAspectRatio: 0.69,
                 ),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
@@ -213,7 +228,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       products[index].data() as Map<String, dynamic>;
                   return ProductCardHome(
                     product: product,
-                    onTap: () => addToCart(product),
+                    onTap: () {
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        // User is logged in
+                        addToCart(product);
+                      } else {
+                        // User is not logged in
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              'You are not logged in. Please log in to add products to your cart.',
+                            ),
+                            backgroundColor: Colors.orange,
+                            behavior: SnackBarBehavior.floating,
+                            action: SnackBarAction(
+                              label: 'Login',
+                              textColor: Colors.white,
+                              onPressed: () {
+                                setState(() {
+                                  _selectedIndex = 1; // Navigate to Cart Screen
+                                });
+                              },
+                            ),
+                          ),
+                        );
+                      }
+                    },
                   );
                 },
               );

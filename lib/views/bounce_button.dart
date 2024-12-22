@@ -7,10 +7,10 @@ class BounceButton extends StatefulWidget {
   const BounceButton({super.key, required this.onTap, required this.child});
 
   @override
-  _BounceButtonState createState() => _BounceButtonState();
+  BounceButtonState createState() => BounceButtonState();
 }
 
-class _BounceButtonState extends State<BounceButton>
+class BounceButtonState extends State<BounceButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
