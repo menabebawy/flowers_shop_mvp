@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Fix Android error">
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
-    </list>
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Fill out Place Order screen text fields" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +46,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -58,12 +54,22 @@
     &quot;assignee&quot;: &quot;menabebawy&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/menabebawy/flowers_shop_mvp.git",
-    "accountId": "c6f865aa-ddd8-472e-8b89-c124e93c2e57"
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="Refresh user data on Profile" />
+        <option name="rewordedMessage" value="Refresh user data on Profile" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="ba0a477c9b7c9685de5f32963ec6eb9e1069ee07" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/menabebawy/flowers_shop_mvp.git&quot;,
+    &quot;accountId&quot;: &quot;c6f865aa-ddd8-472e-8b89-c124e93c2e57&quot;
   }
-}]]></component>
+}</component>
   <component name="InvalidFacetManager">
     <ignored-facets>
       <facet id="flowers_shop_mvp_android/invalid/Android" />
@@ -200,7 +206,7 @@
       <workItem from="1734462002444" duration="7053000" />
       <workItem from="1734548345151" duration="655000" />
       <workItem from="1734549072360" duration="6626000" />
-      <workItem from="1734861932351" duration="24104000" />
+      <workItem from="1734861932351" duration="26675000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -362,7 +368,39 @@
       <option name="project" value="LOCAL" />
       <updated>1735153251621</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Fix Android error">
+      <option name="closed" value="true" />
+      <created>1735154236152</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1735154236152</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fix Android error">
+      <option name="closed" value="true" />
+      <created>1735154250917</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1735154250917</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Fill out Place Order screen text fields">
+      <option name="closed" value="true" />
+      <created>1735156423401</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1735156423401</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Fill out Place Order screen text fields">
+      <option name="closed" value="true" />
+      <created>1735156785435</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1735156785435</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -415,13 +453,36 @@
     <MESSAGE value="Add live badge cart" />
     <MESSAGE value="Toast message the item has been added to cart" />
     <MESSAGE value="Edit user new UI" />
-    <MESSAGE value="Refresh user data on Profile" />
     <MESSAGE value="wip" />
     <MESSAGE value="Fix Android error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Android error" />
+    <MESSAGE value="Refresh user data on Profile" />
+    <MESSAGE value="Fill out Place Order screen text fields" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fill out Place Order screen text fields" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart</url>
+          <line>43</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart</url>
+          <line>44</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart</url>
+          <line>49</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart</url>
+          <line>50</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="dart-exception" />
       </default-breakpoints>

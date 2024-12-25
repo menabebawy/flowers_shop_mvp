@@ -14,20 +14,52 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   bool _isProcessing = false;
+  bool _isFetched = false; // Track if data is fetched
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
   bool get _isFormValid {
-    return _firstNameController.text.isNotEmpty &&
-        _lastNameController.text.isNotEmpty &&
+    return _isFetched &&
+        _fullNameController.text.isNotEmpty &&
+        _phoneController.text.isNotEmpty &&
         _addressController.text.isNotEmpty;
   }
 
   double get _totalPrice {
-    return widget.products.fold(0.0, (sum, product) {
+    return widget.products.fold(0.0, (double sum, product) {
       return sum + (product['price'] * product['quantity']);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (userDoc.exists) {
+        final data = userDoc.data();
+        if (data != null) {
+          _fullNameController.text = data['fullName'] ?? '';
+          _phoneController.text = data['phoneNumber'] ?? '';
+          _addressController.text = data['address'] ?? '';
+        }
+      }
+    }
+
+    setState(() {
+      _isFetched = true; // Mark as fetched once data is loaded
     });
   }
 
@@ -56,8 +88,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         'createdAt': Timestamp.now(),
         'products': widget.products,
         'clientInfo': {
-          'firstName': _firstNameController.text,
-          'lastName': _lastNameController.text,
+          'fullName': _fullNameController.text,
+          'phoneNumber': _phoneController.text,
           'address': _addressController.text,
         },
         'totalPrice': _totalPrice,
@@ -100,7 +132,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   'Order Summary',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 10),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -111,7 +142,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       title: Text(product['name']),
                       subtitle: Text('Quantity: ${product['quantity']}'),
                       trailing:
-                          Text('\€${product['price'] * product['quantity']}'),
+                          Text('€${product['price'] * product['quantity']}'),
                     );
                   },
                 ),
@@ -119,23 +150,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                 // Client Data Section
                 const Text(
-                  'Client Information',
+                  'Delivery Information',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 TextField(
-                  controller: _firstNameController,
+                  controller: _fullNameController,
                   decoration: const InputDecoration(
-                    labelText: 'First Name',
+                    labelText: 'Full Name',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (_) => setState(() {}),
                 ),
                 const SizedBox(height: 10),
                 TextField(
-                  controller: _lastNameController,
+                  controller: _phoneController,
                   decoration: const InputDecoration(
-                    labelText: 'Last Name',
+                    labelText: 'Phone',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (_) => setState(() {}),
@@ -153,7 +184,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                 // Total Price Section
                 Text(
-                  'Total: \€${_totalPrice.toStringAsFixed(2)}',
+                  'Total: €${_totalPrice.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

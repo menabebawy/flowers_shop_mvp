@@ -6,10 +6,10 @@ class OrderDetailScreen extends StatefulWidget {
   final Map<String, dynamic> orderData;
 
   const OrderDetailScreen({
-    Key? key,
+    super.key,
     required this.orderId,
     required this.orderData,
-  }) : super(key: key);
+  });
 
   @override
   State<OrderDetailScreen> createState() => _OrderDetailScreenState();
@@ -52,7 +52,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   // Calculate total price
   double calculateTotal() {
-    return products.fold(0.0, (sum, product) {
+    return products.fold(0.0, (double sum, product) {
       return sum + ((product['price'] ?? 0) * (product['quantity'] ?? 0));
     });
   }

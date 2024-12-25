@@ -125,7 +125,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         AppBar(
           backgroundColor: Colors.black,
-          centerTitle: true,
           title: FutureBuilder<List<QueryDocumentSnapshot>>(
             future: categoriesFuture,
             builder: (context, snapshot) {

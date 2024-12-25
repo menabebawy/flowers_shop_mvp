@@ -138,7 +138,6 @@ class CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
         foregroundColor: Colors.white,
         backgroundColor: Colors.black,
         title: const Text('Cart'),
