@@ -9,18 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Toast message the item has been added to cart">
-      <change afterPath="$PROJECT_DIR$/lib/screens/checkout/order_success_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/screens/profile/edit_profile_screen.dart" afterDir="false" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Fix Android error">
+      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/background.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/local_user.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/local_user.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/bounce_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/bounce_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable-v21/launch_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/drawable/launch_background.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,12 +58,12 @@
     &quot;assignee&quot;: &quot;menabebawy&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/menabebawy/flowers_shop_mvp.git&quot;,
-    &quot;accountId&quot;: &quot;71cd0925-618c-49e0-bd3c-cc332a744a27&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/menabebawy/flowers_shop_mvp.git",
+    "accountId": "c6f865aa-ddd8-472e-8b89-c124e93c2e57"
   }
-}</component>
+}]]></component>
   <component name="InvalidFacetManager">
     <ignored-facets>
       <facet id="flowers_shop_mvp_android/invalid/Android" />
@@ -207,7 +200,7 @@
       <workItem from="1734462002444" duration="7053000" />
       <workItem from="1734548345151" duration="655000" />
       <workItem from="1734549072360" duration="6626000" />
-      <workItem from="1734861932351" duration="12275000" />
+      <workItem from="1734861932351" duration="24104000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -345,7 +338,31 @@
       <option name="project" value="LOCAL" />
       <updated>1734552111811</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Edit user new UI">
+      <option name="closed" value="true" />
+      <created>1734875444690</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1734875444690</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Refresh user data on Profile">
+      <option name="closed" value="true" />
+      <created>1735152543674</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1735152543674</updated>
+    </task>
+    <task id="LOCAL-00020" summary="wip">
+      <option name="closed" value="true" />
+      <created>1735153251621</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1735153251621</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -397,7 +414,11 @@
     <MESSAGE value="Add to orders" />
     <MESSAGE value="Add live badge cart" />
     <MESSAGE value="Toast message the item has been added to cart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Toast message the item has been added to cart" />
+    <MESSAGE value="Edit user new UI" />
+    <MESSAGE value="Refresh user data on Profile" />
+    <MESSAGE value="wip" />
+    <MESSAGE value="Fix Android error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix Android error" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

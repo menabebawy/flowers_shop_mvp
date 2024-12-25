@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/local_user.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final LocalUser? user;
+  final LocalUser user; // Change from nullable to non-nullable
 
   const EditProfileScreen({super.key, required this.user});
 
@@ -12,41 +13,58 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
+  late TextEditingController _fullNameController;
   late TextEditingController _phoneNumberController;
   late TextEditingController _addressController;
 
   @override
   void initState() {
     super.initState();
-    _lastNameController =
-        TextEditingController(text: widget.user?.fullName ?? '');
+    _fullNameController = TextEditingController(text: widget.user.fullName);
     _phoneNumberController =
-        TextEditingController(text: widget.user?.phoneNumber ?? '');
-    _addressController =
-        TextEditingController(text: widget.user?.address ?? '');
+        TextEditingController(text: widget.user.phoneNumber);
+    _addressController = TextEditingController(text: widget.user.address);
   }
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _fullNameController.dispose();
     _phoneNumberController.dispose();
     _addressController.dispose();
     super.dispose();
   }
 
   Future<void> _saveProfile() async {
-    // Save the updated profile details to Firebase or any backend
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Profile updated successfully!'),
-        backgroundColor: Colors.green,
-      ),
-    );
+    final updatedData = {
+      'fullName': _fullNameController.text.trim(),
+      'phoneNumber': _phoneNumberController.text.trim(),
+      'address': _addressController.text.trim(),
+    };
 
-    Navigator.pop(context); // Navigate back to the ProfileScreen
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.user.id) // Use the `id` field from the `LocalUser`
+          .update(updatedData);
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Profile updated successfully!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.pop(context);
+    } catch (error) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update profile: $error'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -64,13 +82,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Column(
               children: [
                 TextField(
-                  controller: _firstNameController,
-                  decoration: const InputDecoration(labelText: 'First Name'),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _lastNameController,
-                  decoration: const InputDecoration(labelText: 'Last Name'),
+                  controller: _fullNameController,
+                  decoration: const InputDecoration(labelText: 'Full Name'),
                 ),
                 const SizedBox(height: 16),
                 TextField(
@@ -88,7 +101,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(16.0), // Add padding as needed
+              padding: const EdgeInsets.all(16.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 60,
@@ -97,7 +110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero, // No rounded corners
+                      borderRadius: BorderRadius.zero,
                     ),
                   ),
                   child: const Text(

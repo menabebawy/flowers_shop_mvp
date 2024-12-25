@@ -32,34 +32,39 @@ class ProductCardHome extends StatelessWidget {
               child: ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
-                child: product['imageUrl'] != null
-                    ? Image.network(
-                        product['imageUrl'],
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: Colors.grey.shade200,
-                            child: const Icon(
-                              Icons.broken_image,
-                              size: 48,
-                              color: Colors.grey,
-                            ),
-                          );
-                        },
-                      )
-                    : Container(
-                        color: Colors.grey.shade200,
-                        child: const Icon(
-                          Icons.image,
-                          size: 48,
-                          color: Colors.grey,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+                  // Add padding around the image
+                  child: product['imageUrl'] != null
+                      ? Image.network(
+                          product['imageUrl'],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey.shade200,
+                              child: const Icon(
+                                Icons.broken_image,
+                                size: 48,
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
+                        )
+                      : Container(
+                          color: Colors.grey.shade200,
+                          child: const Icon(
+                            Icons.image,
+                            size: 48,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,7 +88,7 @@ class ProductCardHome extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.orange,
                     ),
                   ),
                   const SizedBox(height: 4)

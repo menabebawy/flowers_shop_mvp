@@ -28,4 +28,20 @@ class LocalUser {
       isAdmin: (additionalData['role'] ?? 'user') == 'admin',
     );
   }
+
+  // CopyWith method to create a new instance with updated values
+  LocalUser copyWith({
+    String? fullName,
+    String? phoneNumber,
+    String? address,
+  }) {
+    return LocalUser(
+      id: id,
+      fullName: fullName ?? this.fullName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      address: address ?? this.address,
+      email: email,
+      isAdmin: isAdmin,
+    );
+  }
 }

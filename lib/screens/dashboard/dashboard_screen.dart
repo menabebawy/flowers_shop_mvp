@@ -1,14 +1,12 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flowers_shop_mvp/screens/authentication/login_screen.dart';
 import 'package:flowers_shop_mvp/screens/dashboard/cart_screen.dart';
 import 'package:flowers_shop_mvp/screens/profile/profile_screen.dart';
 import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../models/local_user.dart';
 import '../checkout/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -119,20 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<Widget> _getProfileScreen() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return const LoginScreen();
-
-    final userDoc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get();
-    final additionalData = userDoc.data() ?? {};
-    final localUser = LocalUser.fromFirebase(user, additionalData);
-
-    return ProfileScreen(
-      user: localUser,
-      onLogout: _resetToFirstTab,
-    );
+    return ProfileScreen(onLogout: _resetToFirstTab);
   }
 
   Widget _buildHomeScreen() {
@@ -216,11 +201,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               final products = snapshot.data!.docs;
               return GridView.builder(
                 padding: const EdgeInsets.all(8.0),
+                shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
-                  childAspectRatio: 0.69,
+                  childAspectRatio: 0.71,
                 ),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
