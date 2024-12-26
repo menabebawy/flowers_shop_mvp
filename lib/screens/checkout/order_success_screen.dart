@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../dashboard/cart_screen.dart';
+
 class OrderSuccessScreen extends StatelessWidget {
   const OrderSuccessScreen({super.key});
 
@@ -39,6 +41,14 @@ class OrderSuccessScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
+                  // Clear cart data
+                  final cartState = CartScreen.cartKey.currentState;
+                  if (cartState != null) {
+                    cartState
+                        .clearCart(); // Implement a clearCart method in CartScreenState
+                  } else {
+                    print('CartScreen is not mounted.');
+                  }
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(

@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 import '../checkout/checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
+  static final GlobalKey<CartScreenState> cartKey =
+      GlobalKey<CartScreenState>();
+
   final VoidCallback onNavigateHome;
   final VoidCallback onCartUpdated;
 
-  const CartScreen(
-      {required this.onNavigateHome, required this.onCartUpdated, super.key});
+  CartScreen({
+    required this.onNavigateHome,
+    required this.onCartUpdated,
+  }) : super(key: cartKey);
 
   @override
   CartScreenState createState() => CartScreenState();
@@ -23,6 +28,13 @@ class CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     _fetchCart();
+  }
+
+  void clearCart() {
+    setState(() {
+      cart = [];
+      isLoading = false;
+    });
   }
 
   Future<void> _fetchCart() async {
@@ -401,8 +413,8 @@ class CartScreenState extends State<CartScreen> {
                         } else {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  CheckoutScreen(products: cart),
+                              builder: (context) => CheckoutScreen(
+                                  products: cart, orderId: cart[0]['orderId']),
                             ),
                           );
                         }

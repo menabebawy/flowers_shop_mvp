@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'order_success_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final List<Map<String, dynamic>> products; // Products in the cart
-  const CheckoutScreen({super.key, required this.products});
+  final String orderId;
+  final List<Map<String, dynamic>> products;
+
+  const CheckoutScreen(
+      {super.key, required this.products, required this.orderId});
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -14,16 +17,16 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   bool _isProcessing = false;
-  bool _isFetched = false; // Track if data is fetched
+  bool _isFetched = false;
 
   final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
   bool get _isFormValid {
     return _isFetched &&
         _fullNameController.text.isNotEmpty &&
-        _phoneController.text.isNotEmpty &&
+        _phoneNumberController.text.isNotEmpty &&
         _addressController.text.isNotEmpty;
   }
 
@@ -52,7 +55,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         final data = userDoc.data();
         if (data != null) {
           _fullNameController.text = data['fullName'] ?? '';
-          _phoneController.text = data['phoneNumber'] ?? '';
+          _phoneNumberController.text = data['phoneNumber'] ?? '';
           _addressController.text = data['address'] ?? '';
         }
       }
@@ -77,22 +80,42 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           backgroundColor: Colors.red,
         ),
       );
+      setState(() {
+        _isProcessing = false;
+      });
       return;
     }
 
     try {
-      // Save order to Firestore
-      await FirebaseFirestore.instance.collection('orders').add({
-        'userId': user.uid,
+      final doc = await FirebaseFirestore.instance
+          .collection('orders')
+          .doc(widget.orderId)
+          .get();
+
+      if (!doc.exists) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No pending order found to update.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        setState(() {
+          _isProcessing = false;
+        });
+        return;
+      }
+
+      await FirebaseFirestore.instance
+          .collection('orders')
+          .doc(widget.orderId)
+          .update({
         'status': 'placed',
-        'createdAt': Timestamp.now(),
-        'products': widget.products,
-        'clientInfo': {
+        'updatedAt': Timestamp.now(),
+        'deliveryInfo': {
           'fullName': _fullNameController.text,
-          'phoneNumber': _phoneController.text,
+          'phoneNumber': _phoneNumberController.text,
           'address': _addressController.text,
         },
-        'totalPrice': _totalPrice,
       });
 
       // Navigate to success screen
@@ -102,7 +125,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to place order: $e'),
+          content: Text('Failed to update order: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -164,7 +187,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 const SizedBox(height: 10),
                 TextField(
-                  controller: _phoneController,
+                  controller: _phoneNumberController,
                   decoration: const InputDecoration(
                     labelText: 'Phone',
                     border: OutlineInputBorder(),
@@ -197,7 +220,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
           // Place Order Button
           Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 30.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: _isFormValid ? Colors.orange : Colors.grey,
