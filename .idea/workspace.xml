@@ -9,11 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Fill out Place Order screen text fields">
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Clean up Cart screen after successfully placed an order">
+      <change afterPath="$PROJECT_DIR$/lib/screens/authentication/reset_password_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_success_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_success_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/edit_profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/edit_profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,7 +213,9 @@
       <workItem from="1734462002444" duration="7053000" />
       <workItem from="1734548345151" duration="655000" />
       <workItem from="1734549072360" duration="6626000" />
-      <workItem from="1734861932351" duration="35666000" />
+      <workItem from="1734861932351" duration="37385000" />
+      <workItem from="1735205567736" duration="18000" />
+      <workItem from="1735324564642" duration="5162000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -413,7 +417,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735156815592</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Clean up Cart screen after successfully placed an order">
+      <option name="closed" value="true" />
+      <created>1735203311623</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1735203311623</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -470,7 +482,8 @@
     <MESSAGE value="Fix Android error" />
     <MESSAGE value="Refresh user data on Profile" />
     <MESSAGE value="Fill out Place Order screen text fields" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fill out Place Order screen text fields" />
+    <MESSAGE value="Clean up Cart screen after successfully placed an order" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up Cart screen after successfully placed an order" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

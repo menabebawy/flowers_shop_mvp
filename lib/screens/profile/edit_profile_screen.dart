@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/local_user.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final LocalUser user; // Change from nullable to non-nullable
+  final LocalUser user;
 
   const EditProfileScreen({super.key, required this.user});
 

@@ -73,6 +73,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           final user = snapshot.data;
 
           if (user == null) {
+            FirebaseAuth.instance.signOut();
+            widget.onLogout();
+
             return const Center(
               child: Text('User data not found'),
             );
@@ -173,8 +176,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               backgroundColor: Colors.green,
                             ),
                           );
-
-                          widget.onLogout();
+                          // Wait for 2 seconds and then log out
+                          Future.delayed(const Duration(seconds: 2), () {
+                            // Call your logout function here
+                            widget.onLogout();
+                          });
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

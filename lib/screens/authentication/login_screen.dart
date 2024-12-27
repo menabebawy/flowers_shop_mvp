@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/screens/authentication/register_screen.dart';
+import 'package:flowers_shop_mvp/screens/authentication/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -187,6 +188,18 @@ class LoginScreenState extends State<LoginScreen> {
                 },
                 child: const Text('Don\'t have an account? Register Here',
                     style: TextStyle(color: Colors.black54, fontSize: 16)),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Navigate to Reset Password Screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ResetPasswordScreen()),
+                  );
+                },
+                child: const Text('Forgot Password?',
+                    style: TextStyle(color: Colors.grey, fontSize: 16)),
               ),
             ],
           ),

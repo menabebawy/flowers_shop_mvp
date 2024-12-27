@@ -7,6 +7,7 @@ import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../authentication/login_screen.dart';
 import '../checkout/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -117,7 +118,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<Widget> _getProfileScreen() async {
-    return ProfileScreen(onLogout: _resetToFirstTab);
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // User is logged in, return the profile screen
+      return ProfileScreen(onLogout: _resetToFirstTab);
+    } else {
+      // User is not logged in, return the login screen
+      return const LoginScreen();
+    }
   }
 
   Widget _buildHomeScreen() {
