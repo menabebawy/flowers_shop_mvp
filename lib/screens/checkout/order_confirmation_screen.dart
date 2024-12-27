@@ -25,7 +25,7 @@ class OrderConfirmationScreen extends StatelessWidget {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                       builder: (context) =>
-                          const DashboardScreen(isAdmin: false)),
+                          const DashboardScreen()),
                   (route) => false,
                 );
               },

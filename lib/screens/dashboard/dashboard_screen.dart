@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flowers_shop_mvp/models/local_user.dart';
 import 'package:flowers_shop_mvp/screens/dashboard/cart_screen.dart';
 import 'package:flowers_shop_mvp/screens/profile/profile_screen.dart';
 import 'package:flowers_shop_mvp/views/product_card_home.dart';
@@ -11,15 +12,14 @@ import '../authentication/login_screen.dart';
 import '../checkout/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
-  final bool isAdmin;
-
-  const DashboardScreen({super.key, required this.isAdmin});
+  const DashboardScreen({super.key});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  bool isAdmin = false;
   int _selectedIndex = 0;
   int _cartCount = 0;
   String? selectedCategoryId;
@@ -30,6 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     _fetchCartCount();
+    _checkIfAdmin();
     _listenToCartUpdates();
     categoriesFuture = fetchCategories();
 
@@ -47,14 +48,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return snapshot.data ?? const SizedBox.shrink();
         },
       ),
-      widget.isAdmin
-          ? const OrdersScreen()
-          : CartScreen(
-              onCartUpdated: _fetchCartCount,
-              onNavigateHome: () {
-                _resetToFirstTab();
-              },
-            ),
+      FutureBuilder<Widget>(
+        future: _getThirdScreen(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading profile.'));
+          }
+          return snapshot.data ?? const SizedBox.shrink();
+        },
+      )
     ];
 
     SystemChrome.setSystemUIOverlayStyle(
@@ -69,6 +73,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final snapshot =
         await FirebaseFirestore.instance.collection('categories').get();
     return snapshot.docs;
+  }
+
+  Future<void> _checkIfAdmin() async {
+    bool adminStatus = await _isAdmin();
+    setState(() {
+      isAdmin = adminStatus; // Update the state with the admin status
+    });
   }
 
   Future<void> _fetchCartCount() async {
@@ -127,6 +138,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // User is not logged in, return the login screen
       return const LoginScreen();
     }
+  }
+
+  Future<Widget> _getThirdScreen() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (userDoc.exists) {
+        final additionalData = userDoc.data() ?? {};
+        LocalUser localUser = LocalUser.fromFirebase(user, additionalData);
+
+        if (localUser.isAdmin) {
+          return const OrdersScreen();
+        } else {
+          return CartScreen(
+            onCartUpdated: _fetchCartCount,
+            onNavigateHome: () {
+              _resetToFirstTab();
+            },
+          );
+        }
+      }
+    } else {
+      setState(() {
+        _selectedIndex = 1; // Navigate to Cart Screen
+      });
+    }
+
+    return CartScreen(
+      onCartUpdated: _fetchCartCount,
+      onNavigateHome: () {
+        _resetToFirstTab();
+      },
+    );
   }
 
   Widget _buildHomeScreen() {
@@ -304,7 +353,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const BottomNavigationBarItem(
               icon: Icon(Icons.person), label: 'Profile'),
           BottomNavigationBarItem(
-            icon: widget.isAdmin
+            icon: isAdmin
                 ? const Icon(Icons.list)
                 : badges.Badge(
                     showBadge: _cartCount > 0,
@@ -321,7 +370,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     child: const Icon(Icons.shopping_cart),
                   ),
-            label: widget.isAdmin ? 'Orders' : 'Cart',
+            label: isAdmin ? 'Orders' : 'Cart',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -398,5 +447,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> _isAdmin() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    // Check if the user is logged in
+    if (user != null) {
+      try {
+        // Fetch the user document from Firestore
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        // Check if the document exists
+        if (userDoc.exists) {
+          final additionalData = userDoc.data() ?? {};
+          LocalUser localUser = LocalUser.fromFirebase(user, additionalData);
+          return localUser.isAdmin; // Return the admin status
+        }
+      } catch (e) {
+        // Handle any errors that occur during the Firestore call
+        print('Error fetching user document: $e');
+      }
+    }
+
+    // If the user is not logged in or the document does not exist, return false
+    return false;
   }
 }

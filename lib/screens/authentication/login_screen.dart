@@ -54,7 +54,7 @@ class LoginScreenState extends State<LoginScreen> {
 
             navigator.pushReplacement(
               MaterialPageRoute(
-                builder: (context) => DashboardScreen(isAdmin: role == 'admin'),
+                builder: (context) => const DashboardScreen(),
               ),
             );
           } else {
