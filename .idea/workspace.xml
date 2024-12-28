@@ -9,11 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Delete current logged in user">
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Show orders if current logged in user is an admin">
+      <change afterPath="$PROJECT_DIR$/lib/screens/admin/admin_order_detail_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_confirmation_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_confirmation_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/admin/orders_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,11 +138,11 @@
       <recent name="$PROJECT_DIR$/ios/Runner" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/screens/admin" />
       <recent name="$PROJECT_DIR$/lib/screens/profile" />
       <recent name="$PROJECT_DIR$/lib/views" />
       <recent name="$PROJECT_DIR$/lib/screens/dashboard" />
       <recent name="$PROJECT_DIR$/lib/screens" />
-      <recent name="$PROJECT_DIR$/lib/screens/admin" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -213,7 +214,7 @@
       <workItem from="1734549072360" duration="6626000" />
       <workItem from="1734861932351" duration="37385000" />
       <workItem from="1735205567736" duration="18000" />
-      <workItem from="1735324564642" duration="7925000" />
+      <workItem from="1735324564642" duration="17698000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -431,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735331483486</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Show orders if current logged in user is an admin">
+      <option name="closed" value="true" />
+      <created>1735333750471</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1735333750471</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -490,7 +499,8 @@
     <MESSAGE value="Fill out Place Order screen text fields" />
     <MESSAGE value="Clean up Cart screen after successfully placed an order" />
     <MESSAGE value="Delete current logged in user" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete current logged in user" />
+    <MESSAGE value="Show orders if current logged in user is an admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Show orders if current logged in user is an admin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

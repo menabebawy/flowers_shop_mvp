@@ -8,8 +8,8 @@ import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../admin/orders_screen.dart';
 import '../authentication/login_screen.dart';
-import '../checkout/order_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
