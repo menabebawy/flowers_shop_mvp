@@ -8,6 +8,7 @@ import 'package:flowers_shop_mvp/views/product_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../admin/admin_product_update_screen.dart';
 import '../admin/orders_screen.dart';
 import '../authentication/login_screen.dart';
 
@@ -274,8 +275,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () {
                       final user = FirebaseAuth.instance.currentUser;
                       if (user != null) {
-                        // User is logged in
-                        addToCart(product);
+                        if (isAdmin) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminProductUpdateScreen(
+                                product: product,
+                              ),
+                            ),
+                          );
+                        } else {
+                          addToCart(product);
+                        }
                       } else {
                         // User is not logged in
                         ScaffoldMessenger.of(context).showSnackBar(
