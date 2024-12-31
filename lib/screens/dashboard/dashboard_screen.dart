@@ -2,6 +2,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flowers_shop_mvp/models/local_user.dart';
+import 'package:flowers_shop_mvp/screens/admin/add_product_screen.dart';
 import 'package:flowers_shop_mvp/screens/dashboard/cart_screen.dart';
 import 'package:flowers_shop_mvp/screens/profile/profile_screen.dart';
 import 'package:flowers_shop_mvp/views/product_card_home.dart';
@@ -30,8 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchCartCount();
     _checkIfAdmin();
+    _fetchCartCount();
     _listenToCartUpdates();
     categoriesFuture = fetchCategories();
 
@@ -76,11 +77,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return snapshot.docs;
   }
 
-  Future<void> _checkIfAdmin() async {
-    bool adminStatus = await _isAdmin();
-    setState(() {
-      isAdmin = adminStatus; // Update the state with the admin status
-    });
+  Future<bool> _checkIfAdmin() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      isAdmin = userDoc.exists && userDoc.data()?['role'] == 'admin';
+      return isAdmin;
+    }
+
+    isAdmin = false;
+    return isAdmin;
   }
 
   Future<void> _fetchCartCount() async {
@@ -240,6 +249,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
               );
             },
           ),
+          actions: [
+            FutureBuilder<bool>(
+              future: _checkIfAdmin(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(color: Colors.white);
+                }
+                if (snapshot.hasData && snapshot.data == true) {
+                  return IconButton(
+                    icon: const Icon(Icons.add, color: Colors.white),
+                    onPressed: () {
+                      // Navigate to the add product screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddProductScreen(),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return Container(); // Return an empty container if not admin
+              },
+            ),
+          ],
         ),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
@@ -276,6 +310,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       final user = FirebaseAuth.instance.currentUser;
                       if (user != null) {
                         if (isAdmin) {
+                          // Check if the user is an admin
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -458,33 +493,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> _isAdmin() async {
-    final user = FirebaseAuth.instance.currentUser;
-
-    // Check if the user is logged in
-    if (user != null) {
-      try {
-        // Fetch the user document from Firestore
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .get();
-
-        // Check if the document exists
-        if (userDoc.exists) {
-          final additionalData = userDoc.data() ?? {};
-          LocalUser localUser = LocalUser.fromFirebase(user, additionalData);
-          return localUser.isAdmin; // Return the admin status
-        }
-      } catch (e) {
-        // Handle any errors that occur during the Firestore call
-        print('Error fetching user document: $e');
-      }
-    }
-
-    // If the user is not logged in or the document does not exist, return false
-    return false;
   }
 }
