@@ -9,7 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="Admin is able to create new product" />
+    <list default="true" id="e97d6d65-e662-4ab5-8102-862bac5886c8" name="Changes" comment="dart fix --apply">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/admin/add_product_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/admin/add_product_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/admin/admin_order_detail_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/admin/admin_order_detail_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/admin/admin_product_update_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/admin/admin_product_update_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/admin/orders_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/admin/orders_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/register_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/authentication/reset_password_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/authentication/reset_password_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_confirmation_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_confirmation_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_detail_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_detail_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/order_success_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/order_success_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/checkout/product_card_cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/checkout/product_card_cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/cart_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/dashboard/dashboard_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/edit_profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/edit_profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/screens/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/profile/profile_screen.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -210,6 +228,10 @@
       <workItem from="1735205567736" duration="18000" />
       <workItem from="1735324564642" duration="19104000" />
       <workItem from="1735488565103" duration="3144000" />
+      <workItem from="1735755504886" duration="741000" />
+      <workItem from="1735758260800" duration="648000" />
+      <workItem from="1736968140175" duration="4357000" />
+      <workItem from="1737005464574" duration="1146000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: Flutter project setup">
       <option name="closed" value="true" />
@@ -451,7 +473,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735668656212</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="dart fix --apply">
+      <option name="closed" value="true" />
+      <created>1735755635463</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1735755635463</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -487,7 +517,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update .gitignore" />
     <MESSAGE value="Initialize Firebase" />
     <MESSAGE value="Load products' item" />
     <MESSAGE value="Modularize structure" />
@@ -512,17 +541,11 @@
     <MESSAGE value="Show orders if current logged in user is an admin" />
     <MESSAGE value="Admin is able to complete and deliver order" />
     <MESSAGE value="Admin is able to create new product" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin is able to create new product" />
+    <MESSAGE value="dart fix --apply" />
+    <option name="LAST_COMMIT_MESSAGE" value="dart fix --apply" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/screens/checkout/checkout_screen.dart</url>
-          <line>68</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="dart-exception" />
       </default-breakpoints>

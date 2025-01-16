@@ -58,15 +58,18 @@ class LoginScreenState extends State<LoginScreen> {
               ),
             );
           } else {
-            _showErrorDialog('User role not found. Please contact support.');
+            _showErrorDialog(
+                'Benutzerrolle nicht gefunden. Bitte wenden Sie sich an den Support.');
           }
         } else {
-          _showErrorDialog('User data not found. Please contact support.');
+          _showErrorDialog(
+              'Benutzerdaten nicht gefunden. Bitte wenden Sie sich an den Support.');
         }
       } on FirebaseAuthException catch (e) {
         _showErrorDialog(_getFriendlyErrorMessage(e.code));
       } catch (e) {
-        _showErrorDialog('An unexpected error occurred. Please try again.');
+        _showErrorDialog(
+            'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
       }
     }
   }
@@ -83,9 +86,9 @@ class LoginScreenState extends State<LoginScreen> {
   String _getFriendlyErrorMessage(String errorCode) {
     switch (errorCode) {
       case 'invalid-credential':
-        return 'Invalid email or password, Please try again.';
+        return 'Ungültige E-Mail oder Passwort. Bitte versuchen Sie es erneut.';
       default:
-        return 'An error occurred. Please try again.';
+        return 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
     }
   }
 
@@ -93,7 +96,7 @@ class LoginScreenState extends State<LoginScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Login Failed'),
+        title: const Text('Anmeldung fehlgeschlagen'),
         content: Text(message),
         actions: [
           TextButton(
@@ -111,7 +114,7 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
-          title: const Text('Login')),
+          title: const Text('Anmelden')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -121,14 +124,14 @@ class LoginScreenState extends State<LoginScreen> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'E-Mail'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Email is required.';
+                    return 'E-Mail ist erforderlich.';
                   }
                   final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
                   if (!emailRegex.hasMatch(value)) {
-                    return 'Enter a valid email address.';
+                    return 'Geben Sie eine gültige E-Mail-Adresse ein..';
                   }
                   return null;
                 },
@@ -139,10 +142,10 @@ class LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Password is required.';
+                    return 'Passwort ist erforderlich.';
                   }
                   if (value.length < 6) {
-                    return 'Password must be at least 6 characters.';
+                    return 'Das Passwort muss mindestens 6 Zeichen lang sein.';
                   }
                   return null;
                 },
@@ -164,7 +167,7 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: const Text(
-                      'Login',
+                      'Anmelden',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
@@ -186,7 +189,8 @@ class LoginScreenState extends State<LoginScreen> {
                     _passwordController.clear();
                   }
                 },
-                child: const Text('Don\'t have an account? Register Here',
+                child: const Text(
+                    'Haben Sie kein Konto? Registrieren Sie sich hier',
                     style: TextStyle(color: Colors.black54, fontSize: 16)),
               ),
               TextButton(
@@ -198,7 +202,7 @@ class LoginScreenState extends State<LoginScreen> {
                         builder: (context) => const ResetPasswordScreen()),
                   );
                 },
-                child: const Text('Forgot Password?',
+                child: const Text('Passwort vergessen?',
                     style: TextStyle(color: Colors.grey, fontSize: 16)),
               ),
             ],

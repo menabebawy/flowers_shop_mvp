@@ -56,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return const Center(child: Text('Error loading profile.'));
+            return const Center(child: Text('Fehler beim Laden des Profils.'));
           }
           return snapshot.data ?? const SizedBox.shrink();
         },
@@ -129,7 +129,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return const Center(child: Text('Error loading profile.'));
+              return const Center(
+                  child: Text('Fehler beim Laden des Profils.'));
             }
             return snapshot.data ?? const SizedBox.shrink();
           },
@@ -201,7 +202,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Text(
-                  'No categories available.',
+                  'Keine Kategorien verfügbar.',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 );
               }
@@ -214,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: DropdownButton<String>(
                     value: selectedCategoryId,
                     hint: const Text(
-                      'All Categories',
+                      'Alle Kategorien',
                       style: TextStyle(color: Colors.white),
                     ),
                     icon:
@@ -229,7 +230,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const DropdownMenuItem(
                         value: null,
                         child: Text(
-                          'All Categories',
+                          'Alle Kategorien',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -238,7 +239,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         return DropdownMenuItem(
                           value: category.id,
                           child: Text(
-                            data['name'] ?? 'Unnamed Category',
+                            data['name'] ?? 'Unbenannte Kategorie',
                             style: const TextStyle(color: Colors.white),
                           ),
                         );
@@ -288,7 +289,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const Center(child: Text('No products available.'));
+                return const Center(child: Text('Keine Produkte verfügbar.'));
               }
               final products = snapshot.data!.docs;
               return GridView.builder(
@@ -327,7 +328,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: const Text(
-                              'You are not logged in. Please log in to add products to your cart.',
+                              'Sie sind nicht angemeldet. Bitte melden Sie sich an, um Produkte zu Ihrem Warenkorb hinzuzufügen.',
                             ),
                             backgroundColor: Colors.orange,
                             behavior: SnackBarBehavior.floating,
@@ -416,7 +417,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     child: const Icon(Icons.shopping_cart),
                   ),
-            label: isAdmin ? 'Orders' : 'Cart',
+            label: isAdmin ? 'Bestellungen' : 'Warenkorb',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -473,7 +474,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                "'${product['name']}' has been added to your cart!",
+                "'${product['name']}' wurde zu Ihrem Warenkorb hinzugefügt!",
                 style: const TextStyle(fontSize: 14),
               ),
             ),

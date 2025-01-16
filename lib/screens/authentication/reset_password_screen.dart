@@ -17,11 +17,13 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
       try {
         await FirebaseAuth.instance
             .sendPasswordResetEmail(email: _emailController.text.trim());
-        _showDialog('Password reset email sent! Check your inbox.');
+        _showDialog(
+            'E-Mail zum Zurücksetzen des Passworts gesendet! Überprüfen Sie Ihren Posteingang..');
       } on FirebaseAuthException catch (e) {
         _showDialog('Error: ${e.message}');
       } catch (e) {
-        _showDialog('An unexpected error occurred. Please try again.');
+        _showDialog(
+            'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut..');
       }
     }
   }
@@ -30,12 +32,12 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Reset Password'),
+        title: const Text('Passwort zurücksetzen'),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK'),
+            child: const Text('Ja'),
           ),
         ],
       ),

@@ -67,7 +67,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
   Future<void> _saveProduct() async {
     if (nameController.text.isEmpty || priceController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Name and price are required')),
+        const SnackBar(content: Text('Name und Preis sind erforderlich')),
       );
       return;
     }
@@ -94,7 +94,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Product updated successfully')),
+        const SnackBar(content: Text('Produkt erfolgreich aktualisiert')),
       );
 
       Navigator.pop(context);
@@ -142,7 +142,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                                   fit: BoxFit.cover,
                                 )
                               : const Text(
-                                  'No image available',
+                                  'Kein Bild verfügbar',
                                   style: TextStyle(fontSize: 16),
                                 ),
                     ),
@@ -154,7 +154,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                     child: ElevatedButton.icon(
                       onPressed: _pickImage,
                       icon: const Icon(Icons.upload),
-                      label: const Text('Upload New Image'),
+                      label: const Text('Neues Bild hochladen'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.grey,
                       ),
@@ -166,7 +166,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                   TextField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      labelText: 'Product Name',
+                      labelText: 'Produktname',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -179,7 +179,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                     controller: priceController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Product Price',
+                      labelText: 'Produktpreis',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -201,7 +201,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      child: const Text('Update Product',
+                      child: const Text('Produkt aktualisieren',
                           style: TextStyle(fontSize: 16)),
                     ),
                   ),
@@ -228,7 +228,7 @@ class AdminProductUpdateScreenState extends State<AdminProductUpdateScreen> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      child: const Text('Delete Product',
+                      child: const Text('Produkt löschen',
                           style: TextStyle(fontSize: 16)),
                     ),
                   ),

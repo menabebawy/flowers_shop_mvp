@@ -45,15 +45,16 @@ class RegisterScreenState extends State<RegisterScreen> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Registration Successful'),
-            content: const Text('You can now log in with your new account.'),
+            title: const Text('Registrierung erfolgreich'),
+            content: const Text(
+                'Sie können sich jetzt mit Ihrem neuen Konto anmelden.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(context, true); // Navigate back to login screen
                 },
-                child: const Text('OK'),
+                child: const Text('Ja'),
               ),
             ],
           ),
@@ -62,7 +63,8 @@ class RegisterScreenState extends State<RegisterScreen> {
         String message = _getErrorMessage(e.code);
         _showErrorDialog(message);
       } catch (e) {
-        _showErrorDialog('An unexpected error occurred. Please try again.');
+        _showErrorDialog(
+            'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
       }
     }
   }
@@ -70,13 +72,13 @@ class RegisterScreenState extends State<RegisterScreen> {
   String _getErrorMessage(String errorCode) {
     switch (errorCode) {
       case 'email-already-in-use':
-        return 'This email is already registered. Please use a different email.';
+        return 'Diese E-Mail-Adresse ist bereits registriert. Bitte verwenden Sie eine andere E-Mail-Adresse.';
       case 'weak-password':
-        return 'The password is too weak. Please choose a stronger password.';
+        return 'Das Passwort ist zu schwach. Bitte wählen Sie ein stärkeres Passwort.';
       case 'invalid-email':
-        return 'The email address is not valid. Please enter a valid email.';
+        return 'Die E-Mail-Adresse ist ungültig. Bitte geben Sie eine gültige E-Mail-Adresse ein.';
       default:
-        return 'An error occurred. Please try again.';
+        return 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
     }
   }
 

@@ -152,7 +152,7 @@ class CartScreenState extends State<CartScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: Colors.black,
-        title: const Text('Cart'),
+        title: const Text('Warenkorb'),
       ),
       body: Stack(
         children: [
@@ -174,7 +174,7 @@ class CartScreenState extends State<CartScreen> {
                           ),
                           const SizedBox(height: 16),
                           const Text(
-                            'Your cart is empty!',
+                            'Ihr Warenkorb ist leer!',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,
@@ -389,7 +389,7 @@ class CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       child: const Text(
-                        'Go to Shopping',
+                        'Zum Einkaufen gehen',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     )
@@ -406,7 +406,7 @@ class CartScreenState extends State<CartScreen> {
                         if (cart.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Your cart is empty!'),
+                              content: Text('Ihr Warenkorb ist leer!'),
                               backgroundColor: Colors.red,
                             ),
                           );
@@ -420,7 +420,7 @@ class CartScreenState extends State<CartScreen> {
                         }
                       },
                       child: const Text(
-                        'Proceed to Checkout',
+                        'Zur Kasse gehen',
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),

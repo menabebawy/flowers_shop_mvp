@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        title: const Text('Profile'),
+        title: const Text('Profil'),
       ),
       body: FutureBuilder<LocalUser?>(
         future: _userFuture,
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           if (snapshot.hasError) {
             return Center(
-              child: Text('Error loading user: ${snapshot.error}'),
+              child: Text('Fehler beim Laden des Benutzers: ${snapshot.error}'),
             );
           }
 
@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             widget.onLogout();
 
             return const Center(
-              child: Text('User data not found'),
+              child: Text('Benutzerdaten nicht gefunden'),
             );
           }
 
@@ -87,18 +87,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // User Information Section
-                _buildSectionTitle('User Information'),
-                _buildInfoRow('Email', user.email),
-                _buildInfoRow('Full Name', user.fullName),
-                _buildInfoRow('Phone', user.phoneNumber),
+                _buildSectionTitle('Benutzerinformationen'),
+                _buildInfoRow('E-Mail', user.email),
+                _buildInfoRow('Vollständiger Name', user.fullName),
+                _buildInfoRow('Telefon', user.phoneNumber),
                 const SizedBox(height: 32),
 
                 // Settings Section
-                _buildSectionTitle('Settings'),
+                _buildSectionTitle('Einstellungen'),
                 _buildListRow(
                   context,
                   icon: Icons.person,
-                  title: 'Edit Profile',
+                  title: 'Profil bearbeiten',
                   showArrow: true,
                   onTap: () {
                     Navigator.push(
@@ -116,16 +116,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 32),
 
                 // Account Management Section
-                _buildSectionTitle('Account Management'),
+                _buildSectionTitle('Kontoverwaltung'),
                 _buildListRow(
                   context,
                   icon: Icons.logout,
-                  title: 'Logout',
+                  title: 'Abmelden',
                   onTap: () async {
                     final shouldLogout = await _showConfirmationDialog(
                       context,
-                      'Logout',
-                      'Are you sure you want to log out?',
+                      'Abmelden',
+                      'Sind Sie sicher, dass Sie sich abmelden möchten?',
                     );
                     if (shouldLogout) {
                       try {
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Error logging out: $e'),
+                            content: Text('Fehler beim Abmelden: $e'),
                             backgroundColor: Colors.red,
                           ),
                         );
@@ -145,13 +145,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildListRow(
                   context,
                   icon: Icons.delete,
-                  title: 'Delete Account',
+                  title: 'Konto löschen',
                   titleColor: Colors.redAccent,
                   onTap: () async {
                     final shouldDelete = await _showConfirmationDialog(
                       context,
-                      'Delete Account',
-                      'Are you sure you want to delete your account? This action cannot be undone.',
+                      'Konto löschen',
+                      'Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.',
                     );
 
                     if (shouldDelete) {
@@ -171,8 +171,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           // Show success message
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text(
-                                  'Your account has been deleted successfully.'),
+                              content:
+                                  Text('Ihr Konto wurde erfolgreich gelöscht.'),
                               backgroundColor: Colors.green,
                             ),
                           );
@@ -184,7 +184,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('Error deleting account: $e'),
+                              content:
+                                  Text('Fehler beim Löschen des Kontos: $e'),
                               backgroundColor: Colors.red,
                             ),
                           );
@@ -192,7 +193,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('No user is currently logged in.'),
+                            content:
+                                Text('Kein Benutzer ist derzeit angemeldet.'),
                             backgroundColor: Colors.orange,
                           ),
                         );
@@ -246,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Text(
-            value ?? 'Not provided',
+            value ?? 'Nicht angegeben',
             style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ],
@@ -302,11 +304,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancel'),
+                child: const Text('Abbrechen'),
               ),
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Confirm'),
+                child: const Text('Bestätigen'),
               ),
             ],
           ),

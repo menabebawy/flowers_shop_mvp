@@ -88,7 +88,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Details (${widget.orderId})'),
+        title: Text('Bestelldetails (${widget.orderId})'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -96,14 +96,14 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Order ID: ${widget.orderId}',
+              'Bestell-ID: ${widget.orderId}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 8),
             Text('Status: $status'),
             const SizedBox(height: 8),
             Text(
-              'Total: \$${total.toStringAsFixed(2)}',
+              'Gesamt: \$${total.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -111,7 +111,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Products:',
+              'Produkte:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Expanded(
@@ -122,8 +122,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     child: ListTile(
-                      title: Text(product['name'] ?? 'Unknown Product'),
-                      subtitle: Text('Price: \$${product['price']}'),
+                      title: Text(product['name'] ?? 'Unbekanntes Produkt'),
+                      subtitle: Text('Preis: \$${product['price']}'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

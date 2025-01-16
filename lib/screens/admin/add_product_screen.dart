@@ -75,13 +75,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       await FirebaseFirestore.instance.collection('products').add(product);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Product added successfully!')),
+        const SnackBar(content: Text('Produkt erfolgreich hinzugefügt!')),
       );
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Please fill all fields and upload an image.')),
+            content: Text(
+                'Bitte füllen Sie alle Felder aus und laden Sie ein Bild hoch.')),
       );
     }
   }
@@ -90,7 +91,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Product'),
+        title: const Text('Neues Produkt hinzufügen'),
         actions: [
           IconButton(
             icon: const Icon(Icons.help_outline),
@@ -122,29 +123,32 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       _selectedCategory = value;
                     });
                   },
-                  validator: (value) =>
-                      value == null ? 'Please select a category' : null,
+                  validator: (value) => value == null
+                      ? 'Bitte wählen Sie eine Kategorie aus'
+                      : null,
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Product Name'),
+                  decoration: const InputDecoration(labelText: 'Produktname'),
                   onSaved: (value) => _productName = value!,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a product name' : null,
+                  validator: (value) => value!.isEmpty
+                      ? 'Bitte geben Sie einen Produktnamen ein'
+                      : null,
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Description'),
+                  decoration: const InputDecoration(labelText: 'Beschreibung'),
                   maxLines: 3,
                   onSaved: (value) => _description = value!,
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a description' : null,
+                  validator: (value) => value!.isEmpty
+                      ? 'Bitte geben Sie eine Beschreibung ein'
+                      : null,
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Price (€)'),
+                  decoration: const InputDecoration(labelText: 'Preis (€)'),
                   keyboardType: TextInputType.number,
                   onSaved: (value) => _price = double.tryParse(value!),
                   validator: (value) =>
                       value == null || double.tryParse(value) == null
-                          ? 'Please enter a valid price'
+                          ? 'Bitte geben Sie einen gültigen Preis ein'
                           : null,
                 ),
                 const SizedBox(height: 16),
@@ -152,7 +156,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: _pickImage,
-                      child: const Text('Upload Image'),
+                      child: const Text('Bild hochladen'),
                     ),
                     const SizedBox(width: 16),
                     if (_imageFile != null)
@@ -170,12 +174,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     await _uploadImage();
                     _saveProduct();
                   },
-                  child: const Text('Save Product'),
+                  child: const Text('Produkt speichern'),
                 ),
                 const SizedBox(height: 8),
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: const Text('Abbrechen'),
                 ),
               ],
             ),

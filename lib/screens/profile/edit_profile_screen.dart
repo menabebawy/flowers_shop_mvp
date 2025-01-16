@@ -44,13 +44,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     try {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(widget.user.id) // Use the `id` field from the `LocalUser`
+          .doc(widget.user.id)
           .update(updatedData);
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Profile updated successfully!'),
+          content: Text('Profil erfolgreich aktualisiert!'),
           backgroundColor: Colors.green,
         ),
       );
@@ -60,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       // Show error message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to update profile: $error'),
+          content: Text('Fehler beim Aktualisieren des Profils: $error'),
           backgroundColor: Colors.red,
         ),
       );
@@ -72,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text('Edit Profile'),
+        title: const Text('Profil bearbeiten'),
         foregroundColor: Colors.white,
       ),
       body: Stack(
@@ -83,17 +83,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 TextField(
                   controller: _fullNameController,
-                  decoration: const InputDecoration(labelText: 'Full Name'),
+                  decoration:
+                      const InputDecoration(labelText: 'Vollständiger Name'),
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: _phoneNumberController,
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
+                  decoration: const InputDecoration(labelText: 'Telefonnummer'),
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: _addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
+                  decoration: const InputDecoration(labelText: 'Adresse'),
                 ),
               ],
             ),
@@ -114,7 +115,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   child: const Text(
-                    'Save',
+                    'Speichern',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),

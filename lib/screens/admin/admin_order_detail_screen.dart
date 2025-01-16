@@ -23,7 +23,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Order Details',
+          'Bestelldetails',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         foregroundColor: Colors.black,
@@ -34,26 +34,25 @@ class AdminOrderDetailScreen extends StatelessWidget {
           // Main Content Scrollable Section
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(
-                  top: 16.0, left: 16.0, right: 16.0), // Excludes bottom
+              padding:
+                  const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Delivery Information Section
                   const Text(
-                    'Delivery Information',
+                    'Lieferinformationen',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   const SizedBox(height: 8),
                   ListTile(
                     leading: const Icon(Icons.location_on, color: Colors.blue),
                     title: Text(fullName),
-                    subtitle: Text('Address: $address\nPhone: $phoneNumber'),
+                    subtitle: Text('Adresse: $address\nTelefon: $phoneNumber'),
                   ),
                   const Divider(),
                   // Items Section
                   const Text(
-                    'Items',
+                    'Artikel',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   const SizedBox(height: 8),
@@ -63,7 +62,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      final productId = product['productId'] ?? 'Unknown';
+                      final productId = product['productId'] ?? 'Unbekannt';
                       final quantity = product['quantity'] ?? 1;
 
                       return FutureBuilder<DocumentSnapshot>(
@@ -75,22 +74,23 @@ class AdminOrderDetailScreen extends StatelessWidget {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const ListTile(
-                              title: Text('Loading product...'),
+                              title: Text('Produkt wird geladen...'),
                             );
                           }
                           if (snapshot.hasError ||
                               !snapshot.hasData ||
                               !snapshot.data!.exists) {
                             return ListTile(
-                              title: Text('Product not found (ID: $productId)'),
-                              subtitle: Text('Quantity: $quantity'),
+                              title: Text(
+                                  'Produkt nicht gefunden (ID: $productId)'),
+                              subtitle: Text('Menge: $quantity'),
                             );
                           }
 
                           final productData =
                               snapshot.data!.data() as Map<String, dynamic>;
                           final productName =
-                              productData['name'] ?? 'Unknown Product';
+                              productData['name'] ?? 'Unbekanntes Produkt';
                           final productPrice =
                               productData['price'] ?? 0.0; // Price fallback
 
@@ -98,7 +98,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
                             leading: const Icon(Icons.shopping_cart),
                             title: Text(productName),
                             subtitle: Text(
-                                'Quantity: $quantity\nPrice: \$${(productPrice * quantity).toStringAsFixed(2)}'),
+                                'Menge: $quantity\nPreis: \$${(productPrice * quantity).toStringAsFixed(2)}'),
                           );
                         },
                       );
@@ -115,11 +115,11 @@ class AdminOrderDetailScreen extends StatelessWidget {
                     future: _calculateTotal(products),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text('Calculating total...');
+                        return const Text('Gesamtbetrag wird berechnet...');
                       }
                       if (snapshot.hasError) {
                         return const Text(
-                          'Error calculating total.',
+                          'Fehler bei der Berechnung des Gesamtbetrags.',
                           style: TextStyle(color: Colors.red),
                         );
                       }
@@ -137,7 +137,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     _buildTimestampRow(
                       icon: Icons.check_circle,
-                      label: 'Completed At',
+                      label: 'Abgeschlossen am',
                       timestamp: completedAt,
                       color: Colors.green,
                     ),
@@ -146,7 +146,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     _buildTimestampRow(
                       icon: Icons.local_shipping,
-                      label: 'Delivered At',
+                      label: 'Geliefert am',
                       timestamp: deliveredAt,
                       color: Colors.blue,
                     ),
@@ -181,8 +181,8 @@ class AdminOrderDetailScreen extends StatelessWidget {
                   ),
                   child: Text(
                     status == 'placed'
-                        ? 'Mark as Completed'
-                        : 'Mark as Delivered',
+                        ? 'Als Abgeschlossen markieren'
+                        : 'Als geliefert markieren',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
@@ -227,7 +227,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Order marked as completed!'),
+          content: Text('Bestellung als abgeschlossen markiert!'),
           backgroundColor: Colors.green,
         ),
       );
@@ -236,7 +236,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to update order: $e'),
+          content: Text('Fehler beim Aktualisieren der Bestellung: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -256,7 +256,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Order marked as delivered!'),
+          content: Text('Bestellung als geliefert markiert!'),
           backgroundColor: Colors.blue,
         ),
       );
@@ -265,7 +265,7 @@ class AdminOrderDetailScreen extends StatelessWidget {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to update order: $e'),
+          content: Text('Fehler beim Aktualisieren der Bestellung: $e'),
           backgroundColor: Colors.red,
         ),
       );

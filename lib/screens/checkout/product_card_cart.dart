@@ -70,11 +70,11 @@ class _ProductCardCartState extends State<ProductCardCart> {
           color: Colors.grey,
         ),
         title: Text(
-          widget.product['name'] ?? 'Unnamed Product',
+          widget.product['name'] ?? 'Unbenanntes Produkt',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(widget.product['price'] != null
-            ? 'Price: \$${widget.product['price']}'
+            ? 'Preis: \$${widget.product['price']}'
             : 'No price available'),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,

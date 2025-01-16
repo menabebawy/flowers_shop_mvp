@@ -30,7 +30,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Admin Orders',
+          'Admin-Bestellungen',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.black,
@@ -46,7 +46,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(
               child: Text(
-                'No orders found.',
+                'Keine Bestellungen gefunden.',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
             );
@@ -69,9 +69,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: Colors.black,
                   tabs: [
-                    Tab(text: 'Processing'),
-                    Tab(text: 'Completed'),
-                    Tab(text: 'Delivered'),
+                    Tab(text: 'Wird bearbeitet'),
+                    Tab(text: 'Abgeschlossen'),
+                    Tab(text: 'Geliefert'),
                   ],
                 ),
                 Expanded(
@@ -108,7 +108,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
         final order = orders[index].data() as Map<String, dynamic>;
         final products = order['products'] as List;
         final deliveryInfo = order['deliveryInfo'];
-        final address = deliveryInfo?['address'] ?? 'No address provided';
+        final address = deliveryInfo?['address'] ?? 'Keine Adresse angegeben';
         final status = order['status'];
         final statusColor = _getStatusColor(status);
 
@@ -131,19 +131,19 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   future: fetchProductSummaryAndTotal(products),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Text('Loading products...');
+                      return const Text('Produkte werden geladen...');
                     }
                     if (snapshot.hasError) {
-                      return const Text('Error loading products.');
+                      return const Text('Fehler beim Laden der Produkte.');
                     }
 
                     final data = snapshot.data as Map<String, dynamic>;
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Products: ${data['summary']}'),
+                        Text('Produkte: ${data['summary']}'),
                         Text(
-                          'Total: \$${data['total']}',
+                          'Gesamtbetrag: \$${data['total']}',
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -198,7 +198,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           .doc(product['productId'])
           .get();
 
-      final productName = productDoc.data()?['name'] ?? 'Unknown Product';
+      final productName = productDoc.data()?['name'] ?? 'Unbekanntes Produkt';
       final productPrice = productDoc.data()?['price'] ?? 0.0;
       final quantity = product['quantity'] ?? 0;
 
@@ -209,8 +209,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
     await Future.wait(futures);
 
     return {
-      'summary': productSummaries.join(', '),
-      'total': totalPrice.toStringAsFixed(2),
+      'Zusammenfassung': productSummaries.join(', '),
+      'Gesamt': totalPrice.toStringAsFixed(2),
     };
   }
 

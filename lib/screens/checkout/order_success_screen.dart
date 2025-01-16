@@ -27,8 +27,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 // Add horizontal padding
                 child: Text(
-                  'Your order has been placed successfully. We will contact '
-                  'you shortly.\n',
+                  'hre Bestellung wurde erfolgreich aufgegeben. Wir werden Sie in Kürze kontaktieren.\n',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -52,7 +51,7 @@ class OrderSuccessScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(
-                  'Back to Home',
+                  'Zurück zur Startseite.',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

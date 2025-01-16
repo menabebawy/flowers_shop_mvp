@@ -76,7 +76,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (user == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please log in to place an order.'),
+          content:
+              Text('Bitte melden Sie sich an, um eine Bestellung aufzugeben.'),
           backgroundColor: Colors.red,
         ),
       );
@@ -95,7 +96,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       if (!doc.exists) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('No pending order found to update.'),
+            content: Text(
+                'Keine ausstehende Bestellung zum Aktualisieren gefunden.'),
             backgroundColor: Colors.red,
           ),
         );
@@ -125,7 +127,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to update order: $e'),
+          content: Text('ehler beim Aktualisieren der Bestellung: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -140,7 +142,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Checkout'),
+        title: const Text('Zur Kasse'),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
@@ -152,7 +154,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               children: [
                 // Order Summary Section
                 const Text(
-                  'Order Summary',
+                  'Bestellübersicht',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 ListView.builder(
@@ -163,7 +165,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     final product = widget.products[index];
                     return ListTile(
                       title: Text(product['name']),
-                      subtitle: Text('Quantity: ${product['quantity']}'),
+                      subtitle: Text('Menge: ${product['quantity']}'),
                       trailing:
                           Text('€${product['price'] * product['quantity']}'),
                     );
@@ -173,14 +175,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                 // Client Data Section
                 const Text(
-                  'Delivery Information',
+                  'Lieferinformationen',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: _fullNameController,
                   decoration: const InputDecoration(
-                    labelText: 'Full Name',
+                    labelText: 'Vollständiger Name.',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (_) => setState(() {}),
@@ -189,7 +191,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 TextField(
                   controller: _phoneNumberController,
                   decoration: const InputDecoration(
-                    labelText: 'Phone',
+                    labelText: 'Telefon',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (_) => setState(() {}),
@@ -198,7 +200,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 TextField(
                   controller: _addressController,
                   decoration: const InputDecoration(
-                    labelText: 'Address',
+                    labelText: 'Adresse',
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (_) => setState(() {}),
@@ -234,7 +236,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: _isProcessing
                   ? const CircularProgressIndicator(color: Colors.white)
                   : const Text(
-                      'Place Order',
+                      'Bestellung aufgeben',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
             ),
